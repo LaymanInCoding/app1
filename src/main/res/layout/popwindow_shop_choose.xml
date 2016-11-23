@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#99000000">
+
+    <LinearLayout
+        android:layout_width="@dimen/dimen_556_dip"
+        android:layout_height="@dimen/dimen_562_dip"
+        android:layout_marginLeft="@dimen/dimen_97_dip"
+        android:layout_marginRight="@dimen/dimen_97_dip"
+        android:layout_marginTop="@dimen/dimen_240_dip"
+        android:background="@drawable/radius_linearlayout"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_100_dip"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/dimen_30_dip"
+                android:layout_marginTop="@dimen/dimen_30_dip"
+                android:text="@string/choose_shop_info"
+                android:textColor="#333333"
+                android:textSize="@dimen/dimen_32_dip"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_3_dip"
+            android:layout_marginBottom="@dimen/dimen_2_dip"
+            android:background="@color/color_e5"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/shop_list_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/choose_exit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dimen_72_dip"
+        android:layout_marginTop="@dimen/dimen_215_dip"
+        android:src="@mipmap/shop_choose_exit"/>
+
+</RelativeLayout>

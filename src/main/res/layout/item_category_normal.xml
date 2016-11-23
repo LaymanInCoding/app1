@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:paddingLeft="@dimen/dimen_29_dip"
+    android:paddingRight="@dimen/dimen_29_dip"
+    android:layout_height="@dimen/dimen_78_dip"
+    android:gravity="center"
+    android:background="#d15c50">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textColor="#eac9c4"
+        android:id="@+id/normal_category_text"
+        android:text="宝宝辅食"
+        android:gravity="center"
+        android:textSize="@dimen/dimen_30_dip"/>
+</LinearLayout>

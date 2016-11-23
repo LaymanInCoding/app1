@@ -1,0 +1,189 @@
+<resources>
+    <string name="app_name">共享购</string>
+    <string name="save_no_space">保存</string>
+    <string name="save">保&#160;&#160;&#160;&#160;存</string>
+
+    <string name="total_profit">累计收益</string>
+    <string name="today_profit">今日收益</string>
+    <string name="today_orders">今日订单</string>
+    <string name="total_visits">累计访问</string>
+    <string name="choose_good">选品上架</string>
+    <string name="vip_area">VIP专区</string>
+    <string name="my_profit">我的收益</string>
+    <string name="my_shop">我的店铺</string>
+    <string name="order_manage">订单管理</string>
+    <string name="setting">设置</string>
+    <string name="invite_friend">邀请好友</string>
+
+    <string name="username_login">账号登录</string>
+    <string name="phone_login">手机号登录</string>
+    <string name="new_user_register">新店注册</string>
+    <string name="forget_password">忘记密码?</string>
+    <string name="user_account">账号</string>
+    <string name="user_password">密码</string>
+    <string name="user_re_password">确认密码</string>
+    <string name="user_phone">手机号</string>
+    <string name="user_code">验证码</string>
+    <string name="user_code_hint">请输入验证码</string>
+    <string name="user_account_hint">请输入您的手机号</string>
+    <string name="user_reg_password_hint">6-20位英文字母、数字或符号</string>
+    <string name="user_password_hint">请输入密码</string>
+    <string name="user_set_password_hint">请重新设置您的登录密码</string>
+    <string name="user_re_password_hint">请再次输入您的登录密码</string>
+    <string name="user_login_btn_text">登&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;录</string>
+    <string name="user_register_btn_text">注&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;册</string>
+    <string name="get_phone_code">获取验证码</string>
+    <string name="shop_code_no_hint"><u>没有开店码?点击获取开店码</u></string>
+    <string name="shop_agreement" formatted="false">
+        <![CDATA[
+            我已经阅读并理解和同意<font color=\"red\">《共享购用户服务协议》</font>的内容
+        ]]>
+    </string>
+    <string name="invitation_code">邀请码</string>
+    <string name="invitation_code_hint">选填</string>
+    <string name="shop_code">开店码</string>
+    <string name="shop_code_hint">必填</string>
+
+    <string name="back_password_title">找回密码</string>
+    <string name="next_step">下一步</string>
+    <string name="sms_verification">短信验证</string>
+
+    <string name="setting_title">设置</string>
+    <string name="setting_about_xmb">关于共享购</string>
+    <string name="setting_clear_cache">清除缓存</string>
+    <string name="setting_contact_us">联系我们&#160;&#160;&#160;&#160;400-136-7282</string>
+    <string name="setting_current_version">当前版本</string>
+    <string name="setting_logout">退出登录</string>
+
+
+    <string name="shop_setting_title">店铺设置</string>
+    <string name="shop_name">店名&#160;:</string>
+    <string name="shop_name_hint">请输入店铺名称</string>
+    <string name="shop_description_hint">请输入店铺描述</string>
+    <string name="shop_description">店铺介绍&#160;:</string>
+    <string name="shop_description_left_hint">0/48</string>
+    <string name="shop_avatar">头像</string>
+    <string name="shop_background">店铺背景</string>
+    <string name="shop_delete">删除</string>
+    <string name="shop_edit">编辑</string>
+    <string name="add_new_shop">添加新店铺</string>
+    <string name="choose_shop_info">选择店铺信息</string>
+    <string name="set_default">默认</string>
+    <string name="save_shop">保存</string>
+
+    <string name="sort">排序</string>
+    <string name="good_search_hint">请输入商品名称</string>
+
+    <string name="is_on_sale">已上架</string>
+    <string name="is_off_sale">未上架</string>
+    <string name="off_sale">下架</string>
+    <string name="share">分享</string>
+    <string name="good_profit">利润:</string>
+    <string name="sort_default">默认排序</string>
+    <string name="sort_profit">利润由高到低</string>
+    <string name="sort_price_high">价格由高到低</string>
+    <string name="sort_price_low">价格由低到高</string>
+
+
+    <string name="title_vip">VIP专享</string>
+
+    <string name="hot_recommended">热门推荐</string>
+    <string name="search_history">搜索历史</string>
+    <string name="no_search_history">暂无搜索历史</string>
+    <string name="back">返回</string>
+
+
+    <string name="title_my_profit">我的收益</string>
+    <string name="presenting_profit">正在提现</string>
+    <string name="waiting_profit">待收收益</string>
+    <string name="presented_profit">提现记录</string>
+    <string name="available_balance">可提现金额</string>
+    <string name="withdraw_record">提现记录</string>
+    <string name="no_withdraw_record">暂无提现记录</string>
+    <string name="total_withdraw">总提现金额:</string>
+
+    <string name="share_weixin_friend">微信好友</string>
+    <string name="share_weixin_circle">朋友圈</string>
+    <string name="share_copy_link">复制链接</string>
+    <string name="share_qr_code">二维码</string>
+
+    <string name="goods_detail">商品详情</string>
+    <string name="save_to_gallery">保存图片到相册</string>
+
+    <string name="apply_profit">申请提现</string>
+    <string name="pay_immediately">马上支付</string>
+    <string name="confirm">确&#160;&#160;定</string>
+    <string name="cancel">取消</string>
+    <string name="finish">完成</string>
+    <string name="available_balance_profit">可提现余额:</string>
+    <string name="drawing_account">提现账户:</string>
+    <string name="deposit_bank">开户行:</string>
+    <string name="card_no">卡号:</string>
+    <string name="drawing_hint">请填写提现金额:</string>
+    <string name="drawing_placeholder">提现金额</string>
+    <string name="bind_card">绑定银行卡</string>
+    <string name="xing_number">*&#160;</string>
+    <string name="bind_account_hint">请输入您的姓名</string>
+    <string name="bind_locate">*&#160;所在地</string>
+    <string name="bind_province">选择省份</string>
+    <string name="bind_city">选择市</string>
+    <string name="bind_district">选择区县</string>
+    <string name="bind_deposit_bank">请选择您的开户行</string>
+    <string name="bind_branch_bank">请输入您的开户行支行</string>
+    <string name="bind_card_no">请输入您的银行卡号</string>
+    <string name="bind_mobile">请输入您的银行卡绑定手机号码</string>
+    <string name="withdraw_result">提现结果</string>
+    <string name="withdraw_success">提现成功</string>
+    <string name="withdraw_success_hint">(现金将在3个工作日之内转至您的银行卡内)</string>
+
+
+    <string name="add_address">立即开店</string>
+    <string name="receipt_address_user">请输入收货人</string>
+    <string name="receipt_address_phone">请输入手机号码</string>
+    <string name="receipt_phone_code">请输入验证码</string>
+    <string name="receipt_address_address">请输入详细地址</string>
+
+
+    <string name="order_search_hint">请输入订单号</string>
+    <string name="order_detail_btn">详情</string>
+    <string name="no_order_record">暂无订单记录</string>
+    <string name="no_goods_record">尚无上架商品</string>
+    <string name="no_goods_result">对不起,尚无商品~</string>
+
+    <string name="order_detail_user">收货人:</string>
+    <string name="order_detail_order_sn">订单编号:</string>
+    <string name="order_add_time">下单时间:</string>
+    <string name="order_address">收货地址:</string>
+    <string name="order_pay_time">付款时间:</string>
+    <string name="order_shipping_fee">运费:</string>
+    <string name="order_goods_amount">商品金额:</string>
+    <string name="order_amount">应付金额(含运费):</string>
+    <string name="order_shipping_way">快递公司:</string>
+    <string name="order_invoice_no">快递单号:</string>
+    <string name="order_detail_title">订单详情</string>
+    <string name="invoice_detail_title">物流详情</string>
+
+
+
+    <string name="pay_hint">下单成功,请于两小时内支付,超时未付款订单将自动取消~</string>
+    <string name="pay_way_hint">请选择支付方式:</string>
+    <string name="pay_way_ali">支付宝客户端支付</string>
+    <string name="pay_way_wx">微信客户端支付</string>
+    <string name="pay_btn_hint">支付</string>
+    <string name="pay_success">支付成功</string>
+    <string name="pay_code_hint">您的开店码为:</string>
+    <string name="pay_code_hint2">请牢记您的开店码</string>
+    <string name="back_to_register"><u>返回注册</u></string>
+
+    <string name="update_found">发现新版本</string>
+    <string name="update_info">更新内容</string>
+    <string name="latest_version">最新版本 :</string>
+    <string name="new_version_size">新版本大小 :</string>
+    <string name="refused_anyway">残忍拒绝</string>
+    <string name="get_rightnow">马上体验</string>
+
+    <string name="authorize_login">使用共享购账号授权并登陆</string>
+    <string name="login">登&#160;&#160;&#160;&#160;录</string>
+
+    <string name="agreement">用户协议</string>
+</resources>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#f3f3f3"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        app:popupTheme="@style/Dark.Overlay.LightPopup"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetEnd="0dp"
+        android:layout_height="@dimen/dimen_92_dip">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@color/color_white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:src="@mipmap/back_arrow"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dimen_30_dip"
+                android:scaleType="fitXY"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/search_text"
+                android:background="@drawable/goods_select_bg"
+                android:drawableLeft="@mipmap/search"
+                android:drawablePadding="@dimen/dimen_18_dip"
+                android:layout_centerVertical="true"
+                android:paddingLeft="@dimen/dimen_30_dip"
+                android:hint="@string/order_search_hint"
+                android:layout_marginLeft="@dimen/dimen_80_dip"
+                android:layout_marginRight="@dimen/dimen_50_dip"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:textColor="@color/color_black"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:textSize="@dimen/dimen_26_dip"
+                android:layout_height="@dimen/dimen_60_dip" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+    <include layout="@layout/line_h_color_e5" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/titleRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_80_dip"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:background="#fafafa">
+
+            </android.support.v7.widget.RecyclerView>
+            <include layout="@layout/line_h_color_e5" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/orderRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:background="#f3f3f3">
+
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="@dimen/dimen_81_dip"
+            android:id="@+id/no_order_container"
+            android:visibility="gone"
+            android:background="#f3f3f3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dimen_200_dip"
+            android:gravity="center_horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/no_order_record"/>
+            <TextView
+                android:text="@string/no_order_record"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textColor="#666666"
+                android:layout_marginTop="@dimen/dimen_40_dip"
+                android:textSize="@dimen/dimen_24_dip"/>
+        </LinearLayout>
+        <include
+            android:layout_marginTop="@dimen/dimen_81_dip"
+            android:id="@+id/anim_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/loading_anim" />
+        <include
+            android:id="@+id/anim_loading_full"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/loading_anim" />
+    </RelativeLayout>
+</LinearLayout>

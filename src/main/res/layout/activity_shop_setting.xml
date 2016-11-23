@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bg_color02"
+              android:orientation="vertical">
+
+    <include layout="@layout/common_toolbar"/>
+
+    <include
+        layout="@layout/line_h_color_e5"/>
+
+    <LinearLayout
+        android:id="@+id/shop_info_container"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/shop_name_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_96_dip"
+            android:layout_marginTop="@dimen/dimen_10_dip"
+            android:background="@color/color_white"
+            android:paddingEnd="@dimen/dimen_20_dip"
+            android:paddingLeft="@dimen/dimen_30_dip"
+            android:paddingRight="@dimen/dimen_20_dip"
+            android:paddingStart="@dimen/dimen_30_dip">
+
+            <TextView
+                android:id="@+id/shop"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/shop_name"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/dimen_26_dip"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dimen_50_dip"
+                android:gravity="center_vertical|right"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:background="@null"
+                    android:hint="@string/shop_name_hint"
+                    android:id="@+id/shop_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/dimen_30_dip"
+                    android:gravity="left|center_vertical"
+                    android:textColor="@color/color_black"
+                    android:textSize="@dimen/dimen_26_dip"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <include layout="@layout/line_h_color_e5"/>
+
+        <LinearLayout
+            android:id="@+id/shop_desc_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_268_dip"
+            android:background="@color/color_white"
+            android:paddingEnd="@dimen/dimen_20_dip"
+            android:paddingLeft="@dimen/dimen_30_dip"
+            android:paddingRight="@dimen/dimen_20_dip"
+            android:paddingStart="@dimen/dimen_30_dip"
+            android:gravity="top">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/shop_description"
+                android:layout_marginTop="@dimen/dimen_36_dip"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/dimen_26_dip"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dimen_50_dip"
+                android:gravity="center_vertical|right"
+                android:orientation="horizontal">
+                <EditText
+                    android:background="@null"
+                    android:textSize="@dimen/dimen_26_dip"
+                    android:gravity="top"
+                    android:layout_marginTop="@dimen/dimen_36_dip"
+                    android:hint="@string/shop_description_hint"
+                    android:id="@+id/shop_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <include layout="@layout/line_h_color_e5"/>
+
+        <LinearLayout
+            android:id="@+id/shop_avatar_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_120_dip"
+            android:layout_marginTop="@dimen/dimen_10_dip"
+            android:background="@color/color_white"
+            android:paddingEnd="@dimen/dimen_20_dip"
+            android:paddingLeft="@dimen/dimen_30_dip"
+            android:paddingRight="@dimen/dimen_20_dip"
+            android:paddingStart="@dimen/dimen_30_dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/shop_avatar"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/dimen_26_dip"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dimen_50_dip"
+                android:gravity="center_vertical|right"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/arrow_right3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_20_dip"
+                        android:layout_height="@dimen/dimen_22_dip"
+                        android:src="@mipmap/arrow_right"/>
+                </LinearLayout>
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/shop_avatar"
+                    android:layout_width="@dimen/dimen_70_dip"
+                    android:layout_height="@dimen/dimen_70_dip"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dimen_30_dip"
+                    android:layout_toLeftOf="@+id/arrow_right3"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/index_top_bg"
+                    app:riv_border_color="#cccccc"
+                    app:riv_border_width="@dimen/dimen_1_dip"
+                    app:riv_corner_radius="4dip"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <include layout="@layout/line_h_color_e5"/>
+
+        <LinearLayout
+            android:id="@+id/shop_background_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_120_dip"
+            android:background="@color/color_white"
+            android:paddingEnd="@dimen/dimen_20_dip"
+            android:paddingLeft="@dimen/dimen_30_dip"
+            android:paddingRight="@dimen/dimen_20_dip"
+            android:paddingStart="@dimen/dimen_30_dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/shop_background"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/dimen_26_dip"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dimen_50_dip"
+                android:gravity="center_vertical|right"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/arrow_right4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_20_dip"
+                        android:layout_height="@dimen/dimen_22_dip"
+                        android:src="@mipmap/arrow_right"/>
+                </LinearLayout>
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/shop_background"
+                    android:layout_width="@dimen/dimen_124_dip"
+                    android:layout_height="@dimen/dimen_70_dip"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dimen_30_dip"
+                    android:layout_toLeftOf="@+id/arrow_right4"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/index_top_bg"
+                    app:riv_border_color="#cccccc"
+                    app:riv_border_width="@dimen/dimen_1_dip"
+                    app:riv_corner_radius="4dip"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/line_h_color_e5"/>
+
+
+</LinearLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_92_dip"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp"
+        app:popupTheme="@style/Dark.Overlay.LightPopup">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_white"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dimen_30_dip"
+                android:scaleType="fitXY"
+                android:src="@mipmap/back_arrow" />
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/brand_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_60_dip"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_80_dip"
+                android:layout_marginRight="@dimen/dimen_100_dip"
+                android:drawablePadding="@dimen/dimen_18_dip"
+                android:hint="@string/good_search_hint"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="@dimen/dimen_30_dip"
+                android:singleLine="true"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/dimen_36_dip" />
+
+            <ImageView
+                android:id="@+id/toolbar_right"
+                android:layout_width="@dimen/dimen_70_dip"
+                android:layout_height="@dimen/dimen_40_dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:paddingRight="@dimen/dimen_30_dip"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/share_good" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></WebView>
+</LinearLayout>

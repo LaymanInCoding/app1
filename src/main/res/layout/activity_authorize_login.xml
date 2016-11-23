@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+    <include layout="@layout/common_toolbar" />
+    <include
+        layout="@layout/line_h3_color_e5" />
+
+    <ImageView
+        android:layout_width="@dimen/dimen_188_dip"
+        android:layout_height="@dimen/dimen_188_dip"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dimen_132_dip"
+        android:src="@mipmap/ic_launcher"/>
+
+    <TextView
+        android:id="@+id/user_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dimen_52_dip"
+        android:textColor="#333333"
+        android:textSize="@dimen/dimen_32_dip"
+        tools:text="321321231"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dimen_34_dip"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="@dimen/dimen_70_dip"
+            android:layout_height="@dimen/dimen_1_dip"
+            android:background="#777777"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_20_dip"
+            android:text="@string/authorize_login"
+            android:textColor="#777777"
+            android:textSize="@dimen/dimen_26_dip"/>
+
+        <View
+            android:layout_marginLeft="@dimen/dimen_20_dip"
+            android:layout_width="@dimen/dimen_70_dip"
+            android:layout_height="@dimen/dimen_1_dip"
+            android:background="#777777"/>
+    </LinearLayout>
+
+    <TextView
+        android:background="@drawable/common_radius_button"
+        android:id="@+id/login_button"
+        android:textSize="@dimen/dimen_28_dip"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:text="@string/login"
+        android:layout_marginTop="@dimen/dimen_100_dip"
+        android:layout_gravity="center"
+        android:layout_width="@dimen/dimen_370_dip"
+        android:layout_height="@dimen/dimen_70_dip"/>
+
+</LinearLayout>

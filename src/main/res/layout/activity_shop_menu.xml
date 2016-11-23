@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/top_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_400_dip">
+
+            <ImageView
+                android:id="@+id/shop_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@mipmap/index_top_bg" />
+
+            <com.makeramen.roundedimageview.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/shop_avatar"
+                android:layout_width="@dimen/dimen_192_dip"
+                android:layout_height="@dimen/dimen_192_dip"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@mipmap/mitouxiang"
+                app:riv_border_color="#88ffffff"
+                app:riv_border_width="@dimen/dimen_8_dip"
+                app:riv_corner_radius="30dip"
+                app:riv_oval="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/shop_avatar"
+                android:layout_marginTop="@dimen/dimen_30_dip"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/shop_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:shadowColor="#ff000000"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="3"
+                    android:textColor="@color/color_white"
+                    android:textSize="@dimen/dimen_26_dip"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_214_dip"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/total_profit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textColor="@color/color_333"
+                android:textSize="@dimen/dimen_88_dip" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_profit"
+                android:textColor="@color/color_666"
+                android:textSize="@dimen/dimen_26_dip" />
+        </LinearLayout>
+
+        <include layout="@layout/line_h_color_e5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_136_dip"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/today_profit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.00"
+                    android:textColor="@color/color_666"
+                    android:textSize="@dimen/dimen_38_dip" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/today_profit"
+                    android:textColor="@color/color_999"
+                    android:textSize="@dimen/dimen_26_dip" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/today_orders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/color_666"
+                    android:textSize="@dimen/dimen_38_dip" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/today_orders"
+                    android:textColor="@color/color_999"
+                    android:textSize="@dimen/dimen_26_dip" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/total_visits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/color_666"
+                    android:textSize="@dimen/dimen_38_dip" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_visits"
+                    android:textColor="@color/color_999"
+                    android:textSize="@dimen/dimen_26_dip" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <include layout="@layout/line_h_color_e5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_192_dip"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/category_choose_container"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/syicon1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20_dip"
+                    android:text="@string/choose_good"
+                    android:textColor="@color/color_666"
+                    android:textSize="@dimen/dimen_26_dip" />
+            </LinearLayout>
+
+            <include layout="@layout/line_v_color_e5" />
+
+            <LinearLayout
+                android:id="@+id/vip_container"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/syicon2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20_dip"
+                    android:text="@string/vip_area"
+                    android:textColor="@color/color_666"
+                    android:textSize="@dimen/dimen_26_dip" />
+            </LinearLayout>
+
+            <include layout="@layout/line_v_color_e5" />
+
+            <LinearLayout
+                android:id="@+id/my_shop_container"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/syicon3" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20_dip"
+                    android:text="@string/my_shop"
+                    android:textColor="@color/color_666"
+                    android:textSize="@dimen/dimen_26_dip" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <include layout="@layout/line_h_color_e5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_192_dip"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/my_profit_container"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/syicon4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20_dip"
+                    android:text="@string/my_profit"
+                    android:textColor="@color/color_666"
+                    android:textSize="@dimen/dimen_26_dip" />
+            </LinearLayout>
+
+            <include layout="@layout/line_v_color_e5" />
+
+            <LinearLayout
+                android:id="@+id/order_container"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/syicon5" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20_dip"
+                    android:text="@string/order_manage"
+                    android:textColor="@color/color_666"
+                    android:textSize="@dimen/dimen_26_dip" />
+            </LinearLayout>
+
+            <include layout="@layout/line_v_color_e5" />
+
+            <LinearLayout
+                android:id="@+id/setting_container"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/syicon6" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20_dip"
+                    android:text="@string/setting"
+                    android:textColor="@color/color_666"
+                    android:textSize="@dimen/dimen_26_dip" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <include layout="@layout/line_h_color_e5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_192_dip"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:id="@+id/invite_friend_container"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/syicon7" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20_dip"
+                    android:text="@string/invite_friend"
+                    android:textColor="@color/color_666"
+                    android:textSize="@dimen/dimen_26_dip" />
+            </LinearLayout>
+
+            <include layout="@layout/line_v_color_e5" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
