@@ -1,38 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
     <RelativeLayout
+        android:id="@+id/shop_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_90_dip">
+
         <TextView
             android:id="@+id/shop_name"
-            tools:text="张三的店"
-            android:textSize="@dimen/dimen_30_dip"
-            android:textColor="#333333"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_40_dip"
             android:layout_marginTop="@dimen/dimen_30_dip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textColor="#333333"
+            android:textSize="@dimen/dimen_30_dip"
+            tools:text="张三的店"/>
+
         <ImageView
             android:id="@+id/choose_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dimen_40_dip"
             android:layout_marginTop="@dimen/dimen_30_dip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:src="@mipmap/shop_no_choose"/>
+
         <View
-            android:layout_marginLeft="@dimen/dimen_26_dip"
-            android:layout_marginRight="@dimen/dimen_26_dip"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_1_dip"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/dimen_26_dip"
+            android:layout_marginRight="@dimen/dimen_26_dip"
             android:background="@color/color_e5"/>
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/no_shop_msg"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="请先创建店铺信息~"
+        android:textColor="#333333"
+        android:textSize="@dimen/dimen_30_dip"/>
 
 
 </LinearLayout>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#ffffff"
+              android:orientation="vertical">
+
+    <include layout="@layout/common_toolbar"/>
+
+    <include
+        layout="@layout/line_h_color_e5"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:paddingBottom="@dimen/dimen_32_dip">
+
+        <TextView
+            android:id="@+id/my_bean_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dimen_48_dip"
+            android:textColor="#fb5151"
+            android:textSize="@dimen/dimen_86_dip"
+            tools:text="682"/>
+
+        <TextView
+            android:id="@+id/bean_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/my_bean_num"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dimen_5_dip"
+            android:text="个共享豆可赠送"
+            android:textColor="#555555"
+            android:textSize="@dimen/dimen_26_dip"/>
+
+        <ImageView
+            android:id="@+id/use_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/bean_msg"
+            android:layout_marginRight="@dimen/dimen_88_dip"
+            android:layout_marginTop="@dimen/dimen_60_dip"
+            android:src="@mipmap/help_bean_small"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_10_dip"
+        android:background="#f3f3f3"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_20_dip"
+        android:layout_marginRight="@dimen/dimen_20_dip"
+        android:layout_marginTop="@dimen/dimen_50_dip"
+        android:background="@drawable/tv_raiuds6px_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_26_dip"
+            android:layout_marginLeft="@dimen/dimen_30_dip"
+            android:layout_marginTop="@dimen/dimen_26_dip"
+            android:text="赠送数量 :"
+            android:textColor="#555555"
+            android:textSize="@dimen/dimen_26_dip"/>
+
+        <EditText
+            android:id="@+id/send_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请输入赠送数量"
+            android:inputType="number"
+            android:paddingBottom="@dimen/dimen_5_dip"
+            android:paddingLeft="@dimen/dimen_30_dip"
+            android:paddingTop="@dimen/dimen_5_dip"
+            android:textColor="#555555"
+            android:textColorHint="#aaaaaa"
+            android:textSize="@dimen/dimen_26_dip"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_20_dip"
+        android:layout_marginRight="@dimen/dimen_20_dip"
+        android:layout_marginTop="@dimen/dimen_30_dip"
+        android:background="@drawable/tv_raiuds6px_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_26_dip"
+            android:layout_marginLeft="@dimen/dimen_30_dip"
+            android:layout_marginTop="@dimen/dimen_26_dip"
+            android:text="对方账号 :"
+            android:textColor="#555555"
+            android:textSize="@dimen/dimen_26_dip"/>
+
+        <EditText
+            android:id="@+id/use_num_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请输入对方账号"
+            android:inputType="number"
+            android:paddingBottom="@dimen/dimen_5_dip"
+            android:paddingLeft="@dimen/dimen_30_dip"
+            android:paddingTop="@dimen/dimen_5_dip"
+            android:textColor="#555555"
+            android:textColorHint="#aaaaaa"
+            android:textSize="@dimen/dimen_26_dip"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/submit_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_30_dip"
+        android:layout_marginRight="@dimen/dimen_30_dip"
+        android:layout_marginTop="@dimen/dimen_60_dip"
+        android:height="@dimen/dimen_66_dip"
+        android:background="@drawable/button_radius_26"
+        android:gravity="center"
+        android:text="确认赠送"
+        android:textColor="#f3f3f3"/>
+
+</LinearLayout>

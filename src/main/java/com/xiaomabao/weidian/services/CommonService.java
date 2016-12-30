@@ -20,7 +20,7 @@ import rx.Observable;
  */
 public class CommonService {
     private static final String Common_Base_Url = "http://vapi.xiaomabao.com/";
-//    private static final String Common_Base_Url = "http://192.168.11.36/api.php/";
+//    private static final String Common_Base_Url = "http://192.168.10.202";
 
 
     private CommonApi commonApi;

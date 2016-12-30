@@ -66,6 +66,22 @@
         <activity
             android:name=".views.MyShopActivity"
             android:screenOrientation="portrait"></activity>
+
+        <!--共享豆activity-->
+
+        <activity
+            android:name=".views.MyShareBeanActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".views.SendBeanActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".views.ShareBeanHelpActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <!---->
+
         <activity
             android:name=".views.ShopSettingActivity"
             android:screenOrientation="portrait"></activity>

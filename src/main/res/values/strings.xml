@@ -102,6 +102,8 @@
     <string name="no_withdraw_record">暂无提现记录</string>
     <string name="total_withdraw">总提现金额:</string>
 
+    <string name="my_share_bean">我的共享豆</string>
+
     <string name="share_weixin_friend">微信好友</string>
     <string name="share_weixin_circle">朋友圈</string>
     <string name="share_copy_link">复制链接</string>

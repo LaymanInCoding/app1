@@ -13,7 +13,10 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.orhanobut.logger.Logger;
 import com.xiaomabao.weidian.R;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -34,6 +38,7 @@ import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.xiaomabao.weidian.AppContext;
+import com.xiaomabao.weidian.adapters.ShopChooseAdapter;
 import com.xiaomabao.weidian.models.ShopBase;
 import com.xiaomabao.weidian.services.ShopService;
 import com.xiaomabao.weidian.services.UpdateService;
@@ -52,6 +57,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
 
 import jp.wasabeef.blurry.Blurry;
@@ -87,6 +93,7 @@ public class XmbPopubWindow {
     }
 
     public static void showShare(Activity activity, String share_img_path, String share_path, HashMap<String, String> hashMap) {
+        Logger.e(hashMap.toString());
         View contentView = LayoutInflater.from(activity).inflate(R.layout.popwindow_share, null);
         PopupWindow shareWindow = new PopupWindow(contentView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT, true);
         shareWindow.setTouchable(true);
@@ -161,19 +168,17 @@ public class XmbPopubWindow {
     }
 
     public static void showShopChooseWindow(Activity activity, HashMap<String, String> hashMap, String ShareType, String type) {
-        Log.e("URL", hashMap.toString());
+        Logger.e(hashMap.toString());
         View contentView = LayoutInflater.from(activity).inflate(R.layout.popwindow_shop_choose, null);
         PopupWindow shopChooseWindow = new PopupWindow(contentView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT, true);
-
-        LinearLayout shopList = (LinearLayout) contentView.findViewById(R.id.shop_list_container);
-        for (int i = 0; i < AppContext.instance().getShopShareInfoArrayList().size(); i++) {
-            View itemListView = LayoutInflater.from(activity).inflate(R.layout.item_shopchoose_list, null);
-            ShopBase.ShopBaseInfo.ShopShareInfo shopShareInfo = AppContext.instance().getShopShareInfoArrayList().get(i);
-            ((TextView) itemListView.findViewById(R.id.shop_name)).setText(shopShareInfo.shop_name);
-            if (shopShareInfo.is_default.equals("1")) {
-                ((ImageView) itemListView.findViewById(R.id.choose_button)).setImageResource(R.mipmap.shop_choose);
-            }
-            itemListView.setOnClickListener(v -> {
+        RecyclerView shopList = (RecyclerView) contentView.findViewById(R.id.shop_list_recycler);
+        LinearLayoutManager manager = new LinearLayoutManager(activity);
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        ShopChooseAdapter adapter = new ShopChooseAdapter(AppContext.instance().getShopShareInfoArrayList(), activity);
+        adapter.setOnItemChooseListener(new ShopChooseAdapter.OnItemChooseListener() {
+            @Override
+            public void onItemChoose(int position) {
+                ShopBase.ShopBaseInfo.ShopShareInfo shopShareInfo = AppContext.instance().getShopShareInfoArrayList().get(position);
                 String share_id = shopShareInfo.id;
                 hashMap.put("logo", shopShareInfo.shop_avatar);
                 shopChooseWindow.dismiss();
@@ -197,13 +202,14 @@ public class XmbPopubWindow {
                 } else if (ShareType.equals("Show_Goods_Share")) {
                     XmbPopubWindow.showGoodsShare(activity, hashMap, share_id, type);
                 }
-            });
-            shopList.addView(itemListView);
-        }
+            }
+        });
+        shopList.setLayoutManager(manager);
+        shopList.setHasFixedSize(true);
+        shopList.setAdapter(adapter);
         shopChooseWindow.setTouchable(true);
-        shopChooseWindow.showAsDropDown(contentView);
+        shopChooseWindow.showAtLocation(contentView, Gravity.START, 0, 0);
         contentView.findViewById(R.id.choose_exit).setOnClickListener(v -> shopChooseWindow.dismiss());
-
     }
 
 
@@ -245,12 +251,12 @@ public class XmbPopubWindow {
 
                         }
                     });
-
         });
 
     }
 
     public static void showGoodsShare(Activity activity, HashMap<String, String> hashMap, String shareId, String type) {
+        Logger.e(hashMap.toString());
         View contentView = LayoutInflater.from(activity).inflate(R.layout.popwindow_goods_share, null);
         PopupWindow shareWindow = new PopupWindow(contentView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT, true);
         shareWindow.setTouchable(true);

@@ -27,8 +27,8 @@ public class ShopService {
     private static final String USER_SERVER_URL = "http://vapi.xiaomabao.com";
     public static final String SHARE_QRCODE_URL = "http://vapi.xiaomabao.com/common/show_qrcode";
 
-//    private static final String USER_SERVER_URL = "http://192.168.11.36/api.php/";
-//    public static final String SHARE_QRCODE_URL = "http://192.168.11.36/api.php/common/show_qrcode";
+//    private static final String USER_SERVER_URL = "http://192.168.10.202";
+//    public static final String SHARE_QRCODE_URL = "http://192.168.10.202/common/show_qrcode";
 
 
     private ShopApi shopApi;

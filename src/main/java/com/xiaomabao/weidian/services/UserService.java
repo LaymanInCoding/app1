@@ -18,7 +18,7 @@ import rx.Observable;
 
 public class UserService {
     private static final String USER_SERVER_URL = "http://vapi.xiaomabao.com";
-//    private static final String USER_SERVER_URL = "http://192.168.11.36/api.php/";
+//    private static final String USER_SERVER_URL = "http://192.168.10.202";
 //    private static final String USER_SERVER_URL = "http://192.168.22.222";
 
 
@@ -119,23 +119,23 @@ public class UserService {
         return CommonUtil.appendParams(hashMap);
     }
 
-//    public static HashMap<String,String> gen_register_params(String phone,String phone_code,String password,String shop_code,String invite_code){
-//        HashMap<String,String> hashMap = new HashMap<>();
-//        hashMap.put("username",phone);
-//        hashMap.put("phone_code",phone_code);
-//        hashMap.put("password",password);
-//        hashMap.put("shop_code",shop_code);
-//        hashMap.put("invite_code",invite_code);
-//        return CommonUtil.appendParams(hashMap);
-//    }
-
-    public static HashMap<String,String> gen_register_params(String phone,String phone_code,String password){
+    public static HashMap<String,String> gen_register_params(String phone,String phone_code,String password,String invite_code){
         HashMap<String,String> hashMap = new HashMap<>();
         hashMap.put("username",phone);
         hashMap.put("phone_code",phone_code);
         hashMap.put("password",password);
+//        hashMap.put("shop_code",shop_code);
+        hashMap.put("invite_code",invite_code);
         return CommonUtil.appendParams(hashMap);
     }
+
+//    public static HashMap<String,String> gen_register_params(String phone,String phone_code,String password){
+//        HashMap<String,String> hashMap = new HashMap<>();
+//        hashMap.put("username",phone);
+//        hashMap.put("phone_code",phone_code);
+//        hashMap.put("password",password);
+//        return CommonUtil.appendParams(hashMap);
+//    }
 
     public static HashMap<String,String> gen_refresh_token_params(String token){
         HashMap<String,String> hashMap = new HashMap<>();

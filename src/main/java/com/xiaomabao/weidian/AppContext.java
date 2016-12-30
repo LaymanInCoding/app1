@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 import android.view.WindowManager;
 
+import com.orhanobut.logger.Logger;
 import com.xiaomabao.weidian.models.History;
 import com.xiaomabao.weidian.models.LoginBaseInfo;
 import com.xiaomabao.weidian.models.ShareInfo;
@@ -183,6 +184,7 @@ public class AppContext extends Application {
         super.onCreate();
         TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/FZLTXHJW.TTF");
         initDeviceInfo();
+        Logger.init("weidian").hideThreadInfo();
         Realm.init(this);
         mRealm = Realm.getDefaultInstance();
         queryRealmData();

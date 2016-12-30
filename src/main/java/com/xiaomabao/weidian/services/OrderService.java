@@ -19,7 +19,7 @@ import rx.Observable;
 public class OrderService {
 
     private static final String ORDER_SERVER_URL = "http://vapi.xiaomabao.com";
-//    private static final String ORDER_SERVER_URL = "http://192.168.11.36/api.php/";
+//    private static final String ORDER_SERVER_URL = "http://192.168.10.202";
 
     private OrderApi api;
 

@@ -38,8 +38,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText userCodeEditText;
     @BindView(R.id.user_password)
     EditText userPasswordEditText;
-//    @BindView(R.id.invitation_code)
-//    EditText invitationCodeEditText;
+    @BindView(R.id.invitation_code)
+    EditText invitationCodeEditText;
 //    @BindView(R.id.shop_code)
 //    EditText shopCodeEditText;
     @BindView(R.id.shop_agreement)
@@ -86,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
         String username = userPhoneEditText.getText().toString();
         String user_code = userCodeEditText.getText().toString();
         String user_password = userPasswordEditText.getText().toString();
-//        String invitation_code = invitationCodeEditText.getText().toString();
+        String invitation_code = invitationCodeEditText.getText().toString();
 //        String shop_code = shopCodeEditText.getText().toString();
         if(!CommonUtil.isMobilePhone(username)){
             XmbPopubWindow.showAlert(this, Const.MOBILE_REGEX_ERROR);
@@ -105,8 +105,8 @@ public class RegisterActivity extends AppCompatActivity {
 //            return;
 //        }
         XmbPopubWindow.showTranparentLoading(RegisterActivity.this);
-//        mPresenter.register(UserService.gen_register_params(username,user_code, MD5Utils.getMD5Code(user_password),shop_code,invitation_code));
-        mPresenter.register(UserService.gen_register_params(username,user_code, MD5Utils.getMD5Code(user_password)));
+        mPresenter.register(UserService.gen_register_params(username,user_code, MD5Utils.getMD5Code(user_password),invitation_code));
+//        mPresenter.register(UserService.gen_register_params(username,user_code, MD5Utils.getMD5Code(user_password)));
     }
 
     @Override

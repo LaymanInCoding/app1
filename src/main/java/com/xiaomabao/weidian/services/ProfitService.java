@@ -17,7 +17,7 @@ import rx.Observable;
 
 public class ProfitService {
     private static final String USER_SERVER_URL = "http://vapi.xiaomabao.com";
-//    private static final String USER_SERVER_URL = "http://192.168.11.36/api.php/";
+//    private static final String USER_SERVER_URL = "http://192.168.10.202";
 
     private ProfitApi mApi;
 

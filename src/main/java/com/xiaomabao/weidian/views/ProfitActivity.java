@@ -19,31 +19,48 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ProfitActivity extends AppCompatActivity {
-    @BindString(R.string.title_my_profit) String toolbarTitle;
+    @BindString(R.string.title_my_profit)
+    String toolbarTitle;
 
 
     protected final int REQUEST_BINDCARD_CODE = 0x01;
 
-    @BindView(R.id.toolbar_title)TextView toolbarTextView;
-    @BindView(R.id.available_balance) TextView availableBalanceTextView;
-    @BindView(R.id.presenting_profit) TextView presentingProfitTextView;
-    @BindView(R.id.waiting_profit) TextView waitingProfitTextView;
-    @BindView(R.id.loading_anim) View loadView;
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTextView;
+    @BindView(R.id.available_balance)
+    TextView availableBalanceTextView;
+    @BindView(R.id.presenting_profit)
+    TextView presentingProfitTextView;
+    @BindView(R.id.waiting_profit)
+    TextView waitingProfitTextView;
+    @BindView(R.id.loading_anim)
+    View loadView;
 
-    @OnClick(R.id.back) void back() {
+    @OnClick(R.id.back)
+    void back() {
         finish();
     }
-    @OnClick(R.id.presented_profit_container) void jumpToWithdrawRecord(){
+
+    @OnClick(R.id.presented_profit_container)
+    void jumpToWithdrawRecord() {
         Intent intent = new Intent(ProfitActivity.this, WithdrawRecordActivity.class);
         startActivity(intent);
     }
-    @OnClick(R.id.apply_profit) void apply_profit(){
+
+    @OnClick(R.id.my_bean_container)
+    public void onClick() {
+        Intent intent = new Intent(ProfitActivity.this, MyShareBeanActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.apply_profit)
+    void apply_profit() {
         if (AppContext.getCardBindStatus(this).equals("1")) {
             Intent intent = new Intent(ProfitActivity.this, ApplyProfitActivity.class);
             intent.putExtra("balance", profit.data.available_balance);
             startActivity(intent);
-        }else{
-            startActivityForResult(new Intent(this,BindCardActivity.class),REQUEST_BINDCARD_CODE);
+        } else {
+            startActivityForResult(new Intent(this, BindCardActivity.class), REQUEST_BINDCARD_CODE);
         }
     }
 
@@ -60,17 +77,17 @@ public class ProfitActivity extends AppCompatActivity {
         setView();
     }
 
-    protected void setView(){
+    protected void setView() {
         toolbarTextView.setText(toolbarTitle);
     }
 
-    protected void initApi(){
+    protected void initApi() {
         mService = new ShopService();
-        mPresenter = new ProfitPresenter(this,mService);
+        mPresenter = new ProfitPresenter(this, mService);
         mPresenter.profit_info(ShopService.gen_profit_info_params(AppContext.getToken(this)));
     }
 
-    public void loadView(ShopProfit profit){
+    public void loadView(ShopProfit profit) {
         this.profit = profit;
         availableBalanceTextView.setText(profit.data.available_balance);
         presentingProfitTextView.setText(profit.data.presenting_withdraw);
@@ -81,8 +98,8 @@ public class ProfitActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_BINDCARD_CODE) {
-            if(resultCode==RESULT_OK) {
+        if (requestCode == REQUEST_BINDCARD_CODE) {
+            if (resultCode == RESULT_OK) {
                 apply_profit();
             }
         }
@@ -93,6 +110,7 @@ public class ProfitActivity extends AppCompatActivity {
         initApi();
         MobclickAgent.onResume(this);
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);

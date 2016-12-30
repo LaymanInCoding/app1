@@ -94,6 +94,29 @@
             </RelativeLayout>
             <include layout="@layout/line_h_color_e5" />
             <RelativeLayout
+                android:layout_marginTop="@dimen/dimen_10_dip"
+                android:id="@+id/my_bean_container"
+                android:paddingLeft="@dimen/dimen_26_dip"
+                android:paddingRight="@dimen/dimen_26_dip"
+                android:background="@color/color_white"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_90_dip">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/dimen_24_dip"
+                    android:textColor="#555555"
+                    android:text="@string/my_share_bean"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/arrow_right"/>
+            </RelativeLayout>
+            <include layout="@layout/line_h_color_e5" />
+            <RelativeLayout
                 android:paddingLeft="@dimen/dimen_26_dip"
                 android:paddingRight="@dimen/dimen_26_dip"
                 android:background="@color/color_white"
