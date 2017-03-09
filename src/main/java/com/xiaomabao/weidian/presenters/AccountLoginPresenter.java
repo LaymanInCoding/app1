@@ -3,7 +3,9 @@ package com.xiaomabao.weidian.presenters;
 import com.xiaomabao.weidian.AppContext;
 import com.xiaomabao.weidian.defines.Const;
 import com.xiaomabao.weidian.models.UserLogin;
+import com.xiaomabao.weidian.rx.RxBus;
 import com.xiaomabao.weidian.services.UserService;
+import com.xiaomabao.weidian.util.LogUtils;
 import com.xiaomabao.weidian.util.XmbPopubWindow;
 import com.xiaomabao.weidian.views.AccountLoginActivity;
 
@@ -23,6 +25,7 @@ public class AccountLoginPresenter {
     }
 
     public void checkLogin(HashMap<String,String> hashMap) {
+        LogUtils.loge(hashMap.toString());
         mUser.getApi()
                 .login(hashMap)
                 .subscribeOn(Schedulers.newThread())
@@ -46,6 +49,7 @@ public class AccountLoginPresenter {
                             XmbPopubWindow.showAlert(loginView,userLogin.info);
                         }else{
                             AppContext.saveShopBaseInfo(loginView,userLogin.data);
+                            RxBus.getInstance().post(Const.LOG_IN_OUT,true);
                             loginView.jumpToShopIndex();
                         }
                     }

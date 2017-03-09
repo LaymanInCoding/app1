@@ -14,6 +14,8 @@ import com.xiaomabao.weidian.AppContext;
 import com.xiaomabao.weidian.R;
 import com.xiaomabao.weidian.presenters.CheckTokenPresenter;
 import com.xiaomabao.weidian.services.UserService;
+import com.xiaomabao.weidian.util.LogUtils;
+import com.xiaomabao.weidian.util.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -47,13 +49,15 @@ public class GuideActivity extends AppCompatActivity {
     public void checkIsLogin() {
         String token = AppContext.getToken(this);
         if (!token.equals("")) {
+            LogUtils.loge("login");
             mPresenter.checkToken(UserService.gen_refresh_token_params(token));
         } else {
+            LogUtils.loge("unlogin");
             Observable.timer(1, TimeUnit.SECONDS, Schedulers.io())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(Long -> {
-                        startActivity(new Intent(GuideActivity.this, StartWeidianActivity.class));
+                        startActivity(new Intent(GuideActivity.this, MainActivity.class));
                         finish();
                     });
         }
@@ -65,7 +69,10 @@ public class GuideActivity extends AppCompatActivity {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe((Long) -> {
-                        checkIsLogin();
+//                        checkIsLogin();
+                        String token = AppContext.getToken(this);
+                        LogUtils.loge(token);
+                        mPresenter.checkToken(UserService.gen_refresh_token_params(token));
                     });
             return;
         }
@@ -77,7 +84,7 @@ public class GuideActivity extends AppCompatActivity {
             if (i == 2) {
                 imageView.setOnClickListener((view) -> {
                     AppContext.setIsGuide(this);
-                    startActivity(new Intent(GuideActivity.this, StartWeidianActivity.class));
+                    startActivity(new Intent(GuideActivity.this, MainActivity.class));
                     finish();
                 });
             }
@@ -123,10 +130,27 @@ public class GuideActivity extends AppCompatActivity {
 
     };
 
+    public void jumpToShopIndexAndResetToken() {
+        Observable<Long> observable = Observable.timer(3, TimeUnit.SECONDS, Schedulers.io());
+        observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((Long) -> {
+                    SharedPreferencesUtil.remove(this, "token");
+                    startActivity(new Intent(GuideActivity.this, MainActivity.class));
+                    finish();
+                });
+    }
 
     public void jumpToShopIndex() {
-        startActivity(new Intent(this, ShopMenuActivity.class));
-        finish();
+        Observable<Long> observable = Observable.timer(3, TimeUnit.SECONDS, Schedulers.io());
+        observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((Long) -> {
+                    startActivity(new Intent(GuideActivity.this, MainActivity.class));
+                    finish();
+                });
     }
 
     public void jumpToLoginView() {

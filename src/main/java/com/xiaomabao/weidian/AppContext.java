@@ -13,10 +13,13 @@ import com.xiaomabao.weidian.models.History;
 import com.xiaomabao.weidian.models.LoginBaseInfo;
 import com.xiaomabao.weidian.models.ShareInfo;
 import com.xiaomabao.weidian.models.ShopBase;
+import com.xiaomabao.weidian.services.CommonService;
 import com.xiaomabao.weidian.ui.FlowTagLayout;
+import com.xiaomabao.weidian.util.LogUtils;
 import com.xiaomabao.weidian.util.SharedPreferencesUtil;
 import com.xiaomabao.weidian.util.TypefaceUtil;
 import com.xiaomabao.weidian.util.XmbDB;
+import com.xiaomabao.weidian.views.fragment.ShoppingCartFragment;
 
 
 import java.io.File;
@@ -50,37 +53,39 @@ public class AppContext extends Application {
 
     private Realm mRealm;
 
-    public static AppContext instance(){
+    public static AppContext instance() {
         return appContext;
     }
 
-    public void deleteRealmData(){
+    public void deleteRealmData() {
         mRealm.beginTransaction();
         mRealm.deleteAll();
         mRealm.commitTransaction();
     }
-    public void updateRealmData(String keyWord,String time){
+
+    public void updateRealmData(String keyWord, String time) {
         mRealm.beginTransaction();
-        RealmResults<History> results = mRealm.where(History.class).equalTo("keyWords",keyWord).findAll();
+        RealmResults<History> results = mRealm.where(History.class).equalTo("keyWords", keyWord).findAll();
         results.deleteAllFromRealm();
         mRealm.commitTransaction();
-        addRealmData(keyWord,time);
+        addRealmData(keyWord, time);
 
 
     }
-    public boolean checkExistInRm(String keyword){
+
+    public boolean checkExistInRm(String keyword) {
         mRealm.beginTransaction();
         RealmResults<History> results = mRealm.where(History.class).findAll();
         mRealm.commitTransaction();
-        for(History h : results){
-            if (h.getKeyWords().equals(keyword)){
+        for (History h : results) {
+            if (h.getKeyWords().equals(keyword)) {
                 return true;
             }
         }
         return false;
     }
 
-    public void addRealmData(String keyword,String time){
+    public void addRealmData(String keyword, String time) {
         mRealm.beginTransaction();
         History searchHistory = mRealm.createObject(History.class);
         searchHistory.setKeyWords(keyword);
@@ -89,12 +94,12 @@ public class AppContext extends Application {
     }
 
 
-    public ArrayList<String> queryRealmData(){
+    public ArrayList<String> queryRealmData() {
         mRealm.beginTransaction();
         RealmResults<History> results = mRealm.where(History.class).findAll();
         results = results.sort("time", Sort.DESCENDING);
-        Log.e("Result",results.toString());
-        for(History h : results){
+        Log.e("Result", results.toString());
+        for (History h : results) {
             searchHistoryList.add(h.getKeyWords());
         }
         mRealm.commitTransaction();
@@ -102,14 +107,14 @@ public class AppContext extends Application {
     }
 
 
-    public ArrayList<String> getRealmData(){
+    public ArrayList<String> getRealmData() {
         return searchHistoryList;
     }
 
 
-    public void resetShopBaseInfo(){
+    public void resetShopBaseInfo() {
         boolean has_default = false;
-        int index  = 0;
+        int index = 0;
         for (int i = 0; i < this.shopShareInfoArrayList.size(); i++) {
             ShopBase.ShopBaseInfo.ShopShareInfo share_info = this.shopShareInfoArrayList.get(i);
             if (share_info.is_default.equals("1")) {
@@ -117,63 +122,63 @@ public class AppContext extends Application {
                 index = i;
             }
         }
-        if (has_default == false && this.shopShareInfoArrayList.size() == 1){
-            AppContext.setShopBaseInfo(appContext,shopShareInfoArrayList.get(0));
+        if (has_default == false && this.shopShareInfoArrayList.size() == 1) {
+            AppContext.setShopBaseInfo(appContext, shopShareInfoArrayList.get(0));
         }
-        if (this.shopShareInfoArrayList.size() > 1 && has_default == false){
-            AppContext.setShopBaseInfo(appContext,shopShareInfoArrayList.get(0));
+        if (this.shopShareInfoArrayList.size() > 1 && has_default == false) {
+            AppContext.setShopBaseInfo(appContext, shopShareInfoArrayList.get(0));
         }
-        if (has_default == true){
-            AppContext.setShopBaseInfo(appContext,shopShareInfoArrayList.get(index));
+        if (has_default == true) {
+            AppContext.setShopBaseInfo(appContext, shopShareInfoArrayList.get(index));
         }
     }
 
-    public void setShopShareInfoArrayList(ArrayList<ShopBase.ShopBaseInfo.ShopShareInfo> shareInfoArrayList){
+    public void setShopShareInfoArrayList(ArrayList<ShopBase.ShopBaseInfo.ShopShareInfo> shareInfoArrayList) {
         this.shopShareInfoArrayList = shareInfoArrayList;
         for (int i = 0; i < this.shopShareInfoArrayList.size(); i++) {
             ShopBase.ShopBaseInfo.ShopShareInfo share_info = this.shopShareInfoArrayList.get(i);
             if (share_info.is_default.equals("1")) {
-                AppContext.setShopBaseInfo(appContext,share_info);
+                AppContext.setShopBaseInfo(appContext, share_info);
             }
         }
         resetShopBaseInfo();
     }
 
-    public ArrayList<ShopBase.ShopBaseInfo.ShopShareInfo> getShopShareInfoArrayList(){
+    public ArrayList<ShopBase.ShopBaseInfo.ShopShareInfo> getShopShareInfoArrayList() {
         return this.shopShareInfoArrayList;
     }
 
-    public void removeShopShareInfoByIndex(int index){
+    public void removeShopShareInfoByIndex(int index) {
         this.shopShareInfoArrayList.remove(index);
-        if (this.shopShareInfoArrayList.size() == 0){
+        if (this.shopShareInfoArrayList.size() == 0) {
             clearShopBaseInfo(appContext);
         }
     }
 
-    public void updateShopShareInfoByIndex(int postion,ShopBase.ShopBaseInfo.ShopShareInfo shareInfo){
+    public void updateShopShareInfoByIndex(int postion, ShopBase.ShopBaseInfo.ShopShareInfo shareInfo) {
         this.shopShareInfoArrayList.set(postion, shareInfo);
         resetShopBaseInfo();
     }
 
-    public void setDefaultShareInfo(String share_id){
-        for(int i = 0; i < shopShareInfoArrayList.size();i++){
+    public void setDefaultShareInfo(String share_id) {
+        for (int i = 0; i < shopShareInfoArrayList.size(); i++) {
             shopShareInfoArrayList.get(i).is_default = "0";
-            if(shopShareInfoArrayList.get(i).id.equals(share_id)){
+            if (shopShareInfoArrayList.get(i).id.equals(share_id)) {
                 shopShareInfoArrayList.get(i).is_default = "1";
             }
         }
         resetShopBaseInfo();
     }
 
-    public void addeShopShareInfoByIndex(ShopBase.ShopBaseInfo.ShopShareInfo shareInfo){
+    public void addeShopShareInfoByIndex(ShopBase.ShopBaseInfo.ShopShareInfo shareInfo) {
         this.shopShareInfoArrayList.add(shareInfo);
         resetShopBaseInfo();
     }
 
-    public void updateShopShareInfoDefault(ShopBase.ShopBaseInfo.ShopShareInfo shareInfo){
-        for(int i = 0; i < shopShareInfoArrayList.size();i++){
+    public void updateShopShareInfoDefault(ShopBase.ShopBaseInfo.ShopShareInfo shareInfo) {
+        for (int i = 0; i < shopShareInfoArrayList.size(); i++) {
             shopShareInfoArrayList.get(i).is_default = "0";
-            if (shopShareInfoArrayList.get(i).id.equals(shareInfo.id)){
+            if (shopShareInfoArrayList.get(i).id.equals(shareInfo.id)) {
                 shopShareInfoArrayList.get(i).is_default = "1";
             }
         }
@@ -184,7 +189,7 @@ public class AppContext extends Application {
         super.onCreate();
         TypefaceUtil.overrideFont(getApplicationContext(), "SERIF", "fonts/FZLTXHJW.TTF");
         initDeviceInfo();
-        Logger.init("weidian").hideThreadInfo();
+        LogUtils.logInit(true);
         Realm.init(this);
         mRealm = Realm.getDefaultInstance();
         queryRealmData();
@@ -206,6 +211,10 @@ public class AppContext extends Application {
         AppContext.height = wm.getDefaultDisplay().getHeight();
     }
 
+    public static boolean isLogin() {
+        return getToken(AppContext.instance()).equals("") ? false : true;
+    }
+
     public static void saveShopBaseInfo(Context context, LoginBaseInfo loginBaseInfo) {
         SharedPreferencesUtil.put(context, "shop_share_normal_url", loginBaseInfo.shop_share_normal_url);
         SharedPreferencesUtil.put(context, "shop_id", loginBaseInfo.shop_id);
@@ -223,8 +232,17 @@ public class AppContext extends Application {
         SharedPreferencesUtil.put(context, "shop_background", loginBaseInfo.shop_background);
         SharedPreferencesUtil.put(context, "shop_description", loginBaseInfo.shop_description);
         SharedPreferencesUtil.put(context, "token", loginBaseInfo.token);
+        SharedPreferencesUtil.put(context, "cart_url", loginBaseInfo.cart_url);
+        SharedPreferencesUtil.put(context, "ucenter_url", loginBaseInfo.ucenter_url);
     }
 
+    public static String getUcenterUrl(Context context) {
+        return SharedPreferencesUtil.get(context, "ucenter_url", "") + "";
+    }
+
+    public static String getCartUrl(Context context) {
+        return SharedPreferencesUtil.get(context, "cart_url", "") + "";
+    }
 
     public static void setLoginPhone(Context context, String login_phone) {
         SharedPreferencesUtil.put(context, "login_phone", login_phone);
@@ -366,17 +384,17 @@ public class AppContext extends Application {
         return (SharedPreferencesUtil.get(context, "is_guide", "") + "").equals("true");
     }
 
-    public static void setShopBaseInfo(Context mView, ShopBase.ShopBaseInfo.ShopShareInfo shop_share_info){
-        AppContext.setShopName(mView,shop_share_info.shop_name);
+    public static void setShopBaseInfo(Context mView, ShopBase.ShopBaseInfo.ShopShareInfo shop_share_info) {
+        AppContext.setShopName(mView, shop_share_info.shop_name);
         AppContext.setShopAvater(mView, shop_share_info.shop_avatar);
-        AppContext.setShopBackground(mView,shop_share_info.shop_background);
+        AppContext.setShopBackground(mView, shop_share_info.shop_background);
         AppContext.setShopDescription(mView, shop_share_info.shop_description);
     }
 
-    public static void clearShopBaseInfo(Context mView){
-        AppContext.setShopName(mView,"");
+    public static void clearShopBaseInfo(Context mView) {
+        AppContext.setShopName(mView, "");
         AppContext.setShopAvater(mView, "");
-        AppContext.setShopBackground(mView,"");
+        AppContext.setShopBackground(mView, "");
         AppContext.setShopDescription(mView, "");
     }
 
@@ -389,7 +407,9 @@ public class AppContext extends Application {
     }
 
     public static void clearLoginInfo(Context context) {
-        SharedPreferencesUtil.remove(context, "token");
+        SharedPreferencesUtil.put(context, "token", "");
+        SharedPreferencesUtil.put(context, "shop_name", "");
+        SharedPreferencesUtil.put(context, "cart_url", "http://192.168.11.153:81/cart");
     }
 
     public static void setCurrentUpdateVersion(Context context) {
@@ -444,4 +464,7 @@ public class AppContext extends Application {
         mRealm.close();//释放Realm资源；
     }
 
+    public void logOut() {
+
+    }
 }

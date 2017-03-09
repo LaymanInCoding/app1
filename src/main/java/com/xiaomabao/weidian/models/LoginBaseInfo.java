@@ -1,5 +1,7 @@
 package com.xiaomabao.weidian.models;
 
+import java.util.List;
+
 public class LoginBaseInfo {
     public int shop_id;
     public String shop_share_normal_url;
@@ -17,4 +19,7 @@ public class LoginBaseInfo {
     public String shop_description;
     public String shop_avatar;
     public String token;
+    public String cart_url;
+    public String ucenter_url;
+    public List<ShopBase.ShopBaseInfo.ShopShareInfo> shop_share_info;
 }

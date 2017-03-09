@@ -23,12 +23,16 @@
         tools:replace="android:icon,android:theme">
         <activity
             android:name=".views.GuideActivity"
+            android:theme="@style/StartTheme"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".views.MainActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".views.StartWeidianActivity"
             android:screenOrientation="portrait"></activity>
@@ -40,6 +44,9 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".views.RegisterActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".views.PayCashActivity"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".views.ShopMenuActivity"

@@ -9,13 +9,12 @@
     </style>
 
     <style name="StartTheme" parent="AppTheme">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@mipmap/guide_page</item>
     </style>
 
     <style name="Dark.Overlay.LightPopup" parent="ThemeOverlay.AppCompat.Light">
     </style>
-
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="leftIconButtonTextView">
         <item name="android:paddingLeft">@dimen/dimen_5_dip</item>
         <item name="android:layout_width">wrap_content</item>

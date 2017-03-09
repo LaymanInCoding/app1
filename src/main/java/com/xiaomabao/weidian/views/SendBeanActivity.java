@@ -10,8 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xiaomabao.weidian.AppContext;
-import com.xiaomabao.weidian.Const;
 import com.xiaomabao.weidian.R;
+import com.xiaomabao.weidian.defines.Const;
 import com.xiaomabao.weidian.presenters.BeanPresenter;
 import com.xiaomabao.weidian.services.BeanService;
 import com.xiaomabao.weidian.util.CommonUtil;

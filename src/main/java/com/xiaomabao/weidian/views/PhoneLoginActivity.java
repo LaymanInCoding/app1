@@ -3,6 +3,8 @@ package com.xiaomabao.weidian.views;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -14,6 +16,7 @@ import com.xiaomabao.weidian.presenters.PhoneLoginPresenter;
 import com.xiaomabao.weidian.services.UserService;
 import com.xiaomabao.weidian.util.CommonUtil;
 import com.xiaomabao.weidian.util.InputSoftUtil;
+import com.xiaomabao.weidian.util.LogUtils;
 import com.xiaomabao.weidian.util.XmbPopubWindow;
 
 import butterknife.BindString;
@@ -24,6 +27,7 @@ import butterknife.OnClick;
 public class PhoneLoginActivity extends AppCompatActivity {
 
     private int REQUEST_ACCOUNT_LOGIN_CODE = 0X01;
+    private int REQUEST_REG_CODE = 0x02;
 
     @BindString(R.string.phone_login)
     String toolbarTitle;
@@ -33,10 +37,16 @@ public class PhoneLoginActivity extends AppCompatActivity {
     EditText userPhoneEditText;
     @BindView(R.id.user_code)
     EditText userCodeEditText;
+    @BindView(R.id.save_shop)
+    TextView registTextView;
 
     private UserService mUserService;
     private PhoneLoginPresenter mPhoneLoginPresenter;
 
+    @OnClick(R.id.save_shop)
+    void jumpToRegister() {
+        startActivityForResult(new Intent(PhoneLoginActivity.this, RegisterActivity.class), REQUEST_REG_CODE);
+    }
 
     @OnClick(R.id.back)
     void back() {
@@ -91,6 +101,8 @@ public class PhoneLoginActivity extends AppCompatActivity {
 
     public void displayTitle() {
         toolbarTitleText.setText(toolbarTitle);
+        registTextView.setVisibility(View.VISIBLE);
+        registTextView.setText("注册");
         userPhoneEditText.setText(AppContext.getLoginPhone(this));
         if (!AppContext.getLoginPhone(this).equals("")) {
             userPhoneEditText.setSelection(AppContext.getLoginPhone(this).length());
@@ -105,7 +117,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
     public void jumpToShopIndex() {
         setResult(RESULT_OK);
         finish();
-        startActivity(new Intent(PhoneLoginActivity.this, ShopMenuActivity.class));
+//        startActivity(new Intent(PhoneLoginActivity.this, MainActivity.class));
     }
 
     @Override
@@ -113,6 +125,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_ACCOUNT_LOGIN_CODE) {
             if (resultCode == RESULT_OK) {
+                LogUtils.loge("loginfinish");
                 setResult(RESULT_OK);
                 finish();
             }

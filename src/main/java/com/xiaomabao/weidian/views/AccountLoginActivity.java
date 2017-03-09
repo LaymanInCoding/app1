@@ -14,6 +14,7 @@ import com.xiaomabao.weidian.presenters.AccountLoginPresenter;
 import com.xiaomabao.weidian.services.UserService;
 import com.xiaomabao.weidian.util.CommonUtil;
 import com.xiaomabao.weidian.util.InputSoftUtil;
+import com.xiaomabao.weidian.util.LogUtils;
 import com.xiaomabao.weidian.util.MD5Utils;
 import com.xiaomabao.weidian.util.XmbPopubWindow;
 
@@ -90,8 +91,9 @@ public class AccountLoginActivity extends AppCompatActivity {
 
     public void jumpToShopIndex(){
         setResult(RESULT_OK);
+        LogUtils.loge("AccountAcFinish");
         finish();
-        startActivity(new Intent(AccountLoginActivity.this,ShopMenuActivity.class));
+//        startActivity(new Intent(AccountLoginActivity.this,MainActivity.class));
     }
 
     public void onResume() {

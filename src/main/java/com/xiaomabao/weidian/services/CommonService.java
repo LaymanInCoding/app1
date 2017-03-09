@@ -1,5 +1,6 @@
 package com.xiaomabao.weidian.services;
 
+import com.xiaomabao.weidian.defines.Const;
 import com.xiaomabao.weidian.models.HKUpdateInfo;
 import com.xiaomabao.weidian.models.UpdateInfo;
 import com.xiaomabao.weidian.util.CommonUtil;
@@ -19,8 +20,8 @@ import rx.Observable;
  * Created by de on 2016/9/8.
  */
 public class CommonService {
-    private static final String Common_Base_Url = "http://vapi.xiaomabao.com/";
-//    private static final String Common_Base_Url = "http://192.168.10.202";
+//    private static final String Common_Base_Url = "http://vapi.xiaomabao.com/";
+    public static final String Common_Base_Url = Const.BASE_URL;
 
 
     private CommonApi commonApi;

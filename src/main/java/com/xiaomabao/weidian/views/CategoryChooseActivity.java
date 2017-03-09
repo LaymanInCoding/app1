@@ -354,7 +354,7 @@ public class CategoryChooseActivity extends AppCompatActivity {
 
     public void initApiInfo() {
         mService = new GoodsService();
-        mPresenter = new CategoryChoosePresenter(this, mService);
+//        mPresenter = new CategoryChoosePresenter(this, mService);
     }
 
     public void handlerRecycleView(List<Category> categoriesList) {

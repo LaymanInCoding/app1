@@ -24,9 +24,9 @@ import retrofit.http.POST;
 import rx.Observable;
 
 public class GoodsService {
-    private static final String USER_SERVER_URL = "http://vapi.xiaomabao.com";
+//    private static final String USER_SERVER_URL = "http://vapi.xiaomabao.com";
 //    private static final String USER_SERVER_URL = "http://192.168.11.36/api.php/";
-//private static final String USER_SERVER_URL = "http://192.168.10.202";
+private static final String USER_SERVER_URL = "http://192.168.11.153";
 
 
     private GoodsApi api;
@@ -59,6 +59,10 @@ public class GoodsService {
         @FormUrlEncoded
         @POST("/goods/goods_list")
         Observable<List<Goods>> goods_list(@FieldMap Map<String, String> params);
+
+        @FormUrlEncoded
+        @POST("/goods/goods_list_v2")
+        Observable<List<Goods>> goods_list_v2(@FieldMap Map<String, String> params);
 
         @FormUrlEncoded
         @POST("/search/goods")

@@ -9,6 +9,7 @@ import com.xiaomabao.weidian.models.Bean;
 import com.xiaomabao.weidian.models.BeanStatus;
 import com.xiaomabao.weidian.models.Status;
 import com.xiaomabao.weidian.services.BeanService;
+import com.xiaomabao.weidian.util.LogUtils;
 import com.xiaomabao.weidian.util.XmbPopubWindow;
 import com.xiaomabao.weidian.views.MyShareBeanActivity;
 import com.xiaomabao.weidian.views.SendBeanActivity;
@@ -76,7 +77,7 @@ public class BeanPresenter {
 
                     @Override
                     public void onNext(BeanStatus status) {
-                        Logger.e(status.toString());
+                        LogUtils.loge(status.toString());
                         if (status.code == 200) {
                             mView1.callback(status.info);
                         } else

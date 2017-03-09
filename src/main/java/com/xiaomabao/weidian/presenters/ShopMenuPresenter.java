@@ -9,8 +9,10 @@ import com.xiaomabao.weidian.defines.Const;
 import com.xiaomabao.weidian.models.ShopBase;
 import com.xiaomabao.weidian.models.ShopStatistics;
 import com.xiaomabao.weidian.services.ShopService;
+import com.xiaomabao.weidian.util.LogUtils;
 import com.xiaomabao.weidian.util.XmbPopubWindow;
 import com.xiaomabao.weidian.views.ShopMenuActivity;
+import com.xiaomabao.weidian.views.fragment.MineFragment;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Type;
@@ -23,10 +25,10 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class ShopMenuPresenter {
-    ShopMenuActivity mView;
+    MineFragment mView;
     ShopService mService;
 
-    public ShopMenuPresenter(ShopMenuActivity view, ShopService service) {
+    public ShopMenuPresenter(MineFragment view, ShopService service) {
         mService = service;
         mView = view;
     }
@@ -51,10 +53,13 @@ public class ShopMenuPresenter {
                                @Override
                                public void onNext(ShopBase shopMenu) {
                                    if (shopMenu.status == 0) {
-                                       XmbPopubWindow.showAlert(mView, shopMenu.info);
+                                       LogUtils.loge("setView");
+//                                       XmbPopubWindow.showAlert(mView.getContext(), shopMenu.info);
+                                       mView.displayShopBaseInfo();
                                    } else {
+                                       LogUtils.loge("setView");
                                        AppContext.instance().setShopShareInfoArrayList(shopMenu.data.shop_share_info);
-                                       AppContext.resetShopInfo(mView, shopMenu);
+                                       AppContext.resetShopInfo(mView.getContext(), shopMenu);
                                        mView.displayShopBaseInfo();
                                    }
                                }
@@ -77,13 +82,13 @@ public class ShopMenuPresenter {
                     @Override
                     public void onError(Throwable e) {
                         XmbPopubWindow.hideLoading();
-                        XmbPopubWindow.showAlert(mView, Const.NET_ERROR_MSG);
+                        XmbPopubWindow.showAlert(mView.getContext(), Const.NET_ERROR_MSG);
                     }
 
                     @Override
                     public void onNext(ShopStatistics shopStatistics) {
                         if (shopStatistics.status == 0) {
-                            XmbPopubWindow.showAlert(mView, shopStatistics.info);
+                            mView.clearShopProfit();
                         } else {
                             mView.displayShopProfit(shopStatistics.data);
                         }

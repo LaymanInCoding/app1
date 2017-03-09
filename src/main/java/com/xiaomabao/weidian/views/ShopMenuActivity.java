@@ -39,6 +39,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 店铺 主页面
+ */
 public class ShopMenuActivity extends AppCompatActivity {
     private int SETTING_REQUEST_CODE = 0x01;
     private int EDIT_REQUEST_CODE = 0x02;
@@ -123,7 +126,7 @@ public class ShopMenuActivity extends AppCompatActivity {
 
     private void setView() {
         if (AppContext.instance().getShopShareInfoArrayList().size() == 0) {
-            shop_name.setText( "请点击头像设置店铺信息");
+            shop_name.setText("请点击头像设置店铺信息");
             Glide.with(this)
                     .load(R.mipmap.mitouxiang)
                     .placeholder(R.mipmap.mitouxiang)
@@ -159,7 +162,7 @@ public class ShopMenuActivity extends AppCompatActivity {
 
     private void initApi() {
         mService = new ShopService();
-        mPresenter = new ShopMenuPresenter(this, mService);
+//        mPresenter = new ShopMenuPresenter(this, mService);
         mPresenter.getShopBaseInfo(ShopService.gen_base_info_params(AppContext.getToken(this)));
     }
 

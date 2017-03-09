@@ -3,12 +3,12 @@ apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'realm-android'
 android {
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion "23.0.0"
 
     defaultConfig {
         applicationId "com.xiaomabao.weidian"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 24
         versionCode 11
         versionName "1.10"
@@ -27,7 +27,7 @@ android {
     }
 
     productFlavors {
-        小麻包 {}
+        共享购 {}
         华为 {}
         小米 {}
         豌豆荚 {}
@@ -85,4 +85,11 @@ dependencies {
     compile files('libs/libammsdk.jar')
     compile files('libs/alipaySdk-20160516.jar')
     compile 'com.orhanobut:logger:1.15'
+    compile project(path: ':pickerview')
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.8@aar'
+    //菜单栏
+    compile 'com.android.support:design:24.1.0'
+
+    compile files('libs/tbs_sdk_thirdapp_v2.2.0.1096_36549_sharewithdownload_withoutGame_obfs_20160830_211645.jar')
+
 }

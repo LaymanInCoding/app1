@@ -121,6 +121,7 @@ public class ShopListActivity extends Activity {
     public void setDefaultCallback(String share_id) {
         AppContext.instance().setDefaultShareInfo(share_id);
         mRecyclerAdapter.notifyDataSetChanged();
+//        setResult(RESULT_OK);
     }
     public void setDeleteCallback(int  position) {
         AppContext.instance().removeShopShareInfoByIndex(position);

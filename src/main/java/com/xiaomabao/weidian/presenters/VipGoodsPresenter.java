@@ -5,6 +5,7 @@ import com.xiaomabao.weidian.models.Brand;
 import com.xiaomabao.weidian.models.Category;
 import com.xiaomabao.weidian.models.Goods;
 import com.xiaomabao.weidian.services.GoodsService;
+import com.xiaomabao.weidian.util.LogUtils;
 import com.xiaomabao.weidian.util.XmbPopubWindow;
 import com.xiaomabao.weidian.views.VipGoodsActivity;
 
@@ -48,6 +49,7 @@ public class VipGoodsPresenter {
     }
 
     public void getVipGoodsList(HashMap<String,String> hashMap) {
+        LogUtils.loge(hashMap.toString());
         mService.getApi()
                 .vip_goods_list(hashMap)
                 .subscribeOn(Schedulers.newThread())

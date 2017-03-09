@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
+import com.tencent.smtt.sdk.CookieManager;
+import com.tencent.smtt.sdk.CookieSyncManager;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -15,6 +15,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.xiaomabao.weidian.AppContext;
 import com.xiaomabao.weidian.R;
 import com.xiaomabao.weidian.defines.Const;
+import com.xiaomabao.weidian.rx.RxBus;
 import com.xiaomabao.weidian.util.Device;
 import com.xiaomabao.weidian.util.XmbPopubWindow;
 import com.yxp.permission.util.lib.PermissionUtil;
@@ -26,37 +27,47 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SettingActivity extends AppCompatActivity {
-    @BindString(R.string.setting_title) String toolbarTitle;
+    @BindString(R.string.setting_title)
+    String toolbarTitle;
 
     @BindView(R.id.toolbar_title)
     TextView toolBarTitleTextView;
     @BindView(R.id.current_version)
     TextView currentVersionTextView;
 
-    @OnClick(R.id.back) void back() {
+    @OnClick(R.id.back)
+    void back() {
         finish();
     }
-    @OnClick(R.id.about_weekday_go) void jumpToAbout() {
-        startActivity(new Intent(SettingActivity.this,AboutActivity.class));
+
+    @OnClick(R.id.about_weekday_go)
+    void jumpToAbout() {
+        startActivity(new Intent(SettingActivity.this, AboutActivity.class));
     }
-    @OnClick(R.id.clear_cache_container) void clear_cache(){
-        new Thread(()-> Glide.get(SettingActivity.this).clearDiskCache()).start();
+
+    @OnClick(R.id.clear_cache_container)
+    void clear_cache() {
+        new Thread(() -> Glide.get(SettingActivity.this).clearDiskCache()).start();
         XmbPopubWindow.showAlert(this, Const.CLEAR_CACHE_SUCCESS);
     }
-    @OnClick(R.id.logout_container) void logout(){
+
+    @OnClick(R.id.logout_container)
+    void logout() {
         AppContext.clearLoginInfo(this);
         setResult(RESULT_OK);
         removeCookie(this);
+        RxBus.getInstance().post(Const.LOG_IN_OUT, true);
         finish();
-        startActivity(new Intent(SettingActivity.this,StartWeidianActivity.class));
     }
-    @OnClick(R.id.tel_container) void tel(){
+
+    @OnClick(R.id.tel_container)
+    void tel() {
         PermissionUtil.getInstance().request(new String[]{Manifest.permission.CALL_PHONE},
                 new PermissionResultCallBack() {
                     @Override
                     public void onPermissionGranted() {
                         Intent intent = new Intent(Intent.ACTION_DIAL);
-                        Uri data = Uri.parse("tel:" + "4001367282");
+                        Uri data = Uri.parse("tel:" + "01085170751");
                         intent.setData(data);
                         startActivity(intent);
                     }
@@ -86,7 +97,7 @@ public class SettingActivity extends AppCompatActivity {
         displayTitle();
     }
 
-    public void displayTitle(){
+    public void displayTitle() {
         toolBarTitleTextView.setText(toolbarTitle);
         currentVersionTextView.setText(Device.getVersion(this));
     }
@@ -95,6 +106,7 @@ public class SettingActivity extends AppCompatActivity {
         super.onResume();
         MobclickAgent.onResume(this);
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);

@@ -57,8 +57,11 @@
                 android:src="@mipmap/share_good" />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
-    <WebView
+    <include layout="@layout/line_h_color_e5"/>
+    <include layout="@layout/loading_anim"
+             android:id="@+id/loading_anim"/>
+    <com.tencent.smtt.sdk.WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></WebView>
+        android:layout_height="match_parent"></com.tencent.smtt.sdk.WebView>
 </LinearLayout>

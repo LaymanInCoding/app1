@@ -7,28 +7,38 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Xml;
 import android.view.View;
 import android.webkit.JavascriptInterface;
-import android.webkit.WebChromeClient;
+
+import com.tencent.smtt.sdk.WebChromeClient;
+
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
+
 import android.widget.TextView;
 
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.smtt.sdk.CookieManager;
+import com.tencent.smtt.sdk.CookieSyncManager;
 import com.umeng.analytics.MobclickAgent;
 import com.xiaomabao.weidian.AppContext;
 import com.xiaomabao.weidian.R;
 import com.xiaomabao.weidian.defines.Const;
+import com.xiaomabao.weidian.rx.RxBus;
+import com.xiaomabao.weidian.util.LogUtils;
 import com.xiaomabao.weidian.util.MD5Utils;
 import com.xiaomabao.weidian.util.XmbPopubWindow;
 
@@ -45,15 +55,18 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class GoodsPreviewActivity extends AppCompatActivity {
     //    @BindString(R.string.goods_detail) String goods_detail;
-    @BindView(R.id.webview)
-    WebView webView;
+
     @BindView(R.id.loading_anim)
     View loadAnimView;
     @BindView(R.id.network_error)
@@ -62,12 +75,28 @@ public class GoodsPreviewActivity extends AppCompatActivity {
     TextView toolbarTitleTextView;
 
     private String param;
-    private  String order_sn;
-    private  String order_amount;
-    private  String body;
-
+    private String order_sn;
+    private String order_amount;
+    private String body;
+    private WebView webView;
+    private String message;
     HashMap<String, String> wx_params = new HashMap<>();
     IWXAPI api;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0x123) {
+                XmbPopubWindow.showAlert(GoodsPreviewActivity.this, message);
+                Observable.timer(1, TimeUnit.SECONDS)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe((Long) -> {
+                            finish();
+                        });
+            }
+        }
+    };
 
     @OnClick(R.id.back)
     void back() {
@@ -80,7 +109,7 @@ public class GoodsPreviewActivity extends AppCompatActivity {
         hashMap.put("title", getIntent().getStringExtra("goods_name"));
         hashMap.put("desc", "【有人@你】你有一个分享尚未点击");
         hashMap.put("url", getIntent().getStringExtra("share_url"));
-        XmbPopubWindow.showShopChooseWindow(GoodsPreviewActivity.this,hashMap,"Show_Goods_Share","0");
+        XmbPopubWindow.showShopChooseWindow(GoodsPreviewActivity.this, hashMap, "Show_Goods_Share", "0");
 //        XmbPopubWindow.showGoodsShare(GoodsPreviewActivity.this, hashMap);
     }
 
@@ -94,34 +123,40 @@ public class GoodsPreviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_preview);
+        webView = (WebView) findViewById(R.id.webview);
         ButterKnife.bind(this);
-        IntentFilter wx_filter = new IntentFilter(Const.WX_CALLBACK);
-        registerReceiver(wx_success_callback,wx_filter);
+        CookieManager manager = CookieManager.getInstance();
+//        manager.removeAllCookie();
+        manager.setAcceptCookie(true);
+        CookieSyncManager.createInstance(this);
         initWebView();
+        IntentFilter wx_filter = new IntentFilter(Const.WX_CALLBACK);
+        registerReceiver(wx_success_callback, wx_filter);
     }
 
-    @SuppressLint({ "JavascriptInterface", "SetJavaScriptEnabled" })
+    @SuppressLint({"JavascriptInterface", "SetJavaScriptEnabled"})
     private BroadcastReceiver wx_success_callback = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            webView.loadUrl("http://weidian.xiaomabao.com/flow/pay_success/"+order_sn);
+            webView.loadUrl("http://weidian.xiaomabao.com/flow/pay_success/" + order_sn);
         }
     };
 
-    @SuppressLint({ "JavascriptInterface", "SetJavaScriptEnabled" })
+    @SuppressLint({"JavascriptInterface", "SetJavaScriptEnabled"})
     protected void initWebView() {
-        param = ("token=" + AppContext.getToken(this) + "&" + "device_id=" + AppContext.getDeviceId(this));
+//        param = ("token=" + AppContext.getToken(this) + "&" + "device_id=" + AppContext.getDeviceId(this));
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         webView.addJavascriptInterface(new MyJavaScriptInterface(this), "xmbapp");
-        webView.postUrl(getIntent().getStringExtra("buy_url"), param.getBytes());
+        webView.loadUrl(getIntent().getStringExtra("buy_url"));
         WebChromeClient webChromeClient = new WebChromeClient() {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
                 toolbarTitleTextView.setText(title);
             }
+
         };
         webView.setWebChromeClient(webChromeClient);
         webView.setWebViewClient(new WebViewClient() {
@@ -138,7 +173,14 @@ public class GoodsPreviewActivity extends AppCompatActivity {
             }
 
             public void onPageFinished(WebView view, String url) {
+                LogUtils.loge("finish");
                 loadAnimView.setVisibility(View.GONE);
+                if (Build.VERSION.SDK_INT < 21) {
+                    CookieSyncManager.getInstance().sync();
+                } else {
+                    CookieManager.getInstance().flush();
+                }
+//                CookieSyncManager.getInstance().sync();
             }
 
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
@@ -184,9 +226,19 @@ public class GoodsPreviewActivity extends AppCompatActivity {
 //            Log.e("JSON INFO",order_sn+order_amount+body);
 
             new WXAsyncTask().execute();
-
         }
 
+        @JavascriptInterface
+        public void showMessage(String msg) {
+            message = msg;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    RxBus.getInstance().post(Const.REFRESH_CART, true);
+                    mHandler.sendEmptyMessage(0x123);
+                }
+            }).start();
+        }
     }
 
     private class WXAsyncTask extends AsyncTask<Void, Void, String> {
@@ -250,32 +302,32 @@ public class GoodsPreviewActivity extends AppCompatActivity {
 
     }
 
-    protected HashMap<String,String> gen_wx_pay_param(){
+    protected HashMap<String, String> gen_wx_pay_param() {
         String nonceStr = MD5Utils.getMessageDigest(String.valueOf(new Random().nextInt(10000)).getBytes());
-        HashMap<String,String> hashMap = new HashMap<>();
-        hashMap.put("appid",Const.WEIXIN_APP_ID);
-        hashMap.put("body",body);
-        hashMap.put("mch_id",Const.WEIXIN_MCH_ID);
-        hashMap.put("nonce_str",nonceStr);
-        hashMap.put("notify_url","http://weidian.xiaomabao.com/payment/wx_app_notify");
-        hashMap.put("out_trade_no",order_sn);
-        hashMap.put("total_fee",(int)(Double.parseDouble(order_amount)*100)+"");
-        hashMap.put("trade_type","APP");
-        hashMap.put("sign",getWXPackageSign(hashMap));
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("appid", Const.WEIXIN_APP_ID);
+        hashMap.put("body", body);
+        hashMap.put("mch_id", Const.WEIXIN_MCH_ID);
+        hashMap.put("nonce_str", nonceStr);
+        hashMap.put("notify_url", "http://weidian.xiaomabao.com/payment/wx_app_notify");
+        hashMap.put("out_trade_no", order_sn);
+        hashMap.put("total_fee", (int) (Double.parseDouble(order_amount) * 100) + "");
+        hashMap.put("trade_type", "APP");
+        hashMap.put("sign", getWXPackageSign(hashMap));
         return hashMap;
     }
 
-    private String getWXPackageSign(HashMap<String,String> hashMap){
+    private String getWXPackageSign(HashMap<String, String> hashMap) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("appid="+hashMap.get("appid")+"&");
-        stringBuilder.append("body="+hashMap.get("body")+"&");
-        stringBuilder.append("mch_id="+hashMap.get("mch_id")+"&");
-        stringBuilder.append("nonce_str="+hashMap.get("nonce_str")+"&");
-        stringBuilder.append("notify_url="+hashMap.get("notify_url")+"&");
-        stringBuilder.append("out_trade_no="+hashMap.get("out_trade_no")+"&");
-        stringBuilder.append("total_fee="+hashMap.get("total_fee")+"&");
-        stringBuilder.append("trade_type="+hashMap.get("trade_type")+"&");
-        stringBuilder.append("key="+Const.WEIXIN_API_KEY);
+        stringBuilder.append("appid=" + hashMap.get("appid") + "&");
+        stringBuilder.append("body=" + hashMap.get("body") + "&");
+        stringBuilder.append("mch_id=" + hashMap.get("mch_id") + "&");
+        stringBuilder.append("nonce_str=" + hashMap.get("nonce_str") + "&");
+        stringBuilder.append("notify_url=" + hashMap.get("notify_url") + "&");
+        stringBuilder.append("out_trade_no=" + hashMap.get("out_trade_no") + "&");
+        stringBuilder.append("total_fee=" + hashMap.get("total_fee") + "&");
+        stringBuilder.append("trade_type=" + hashMap.get("trade_type") + "&");
+        stringBuilder.append("key=" + Const.WEIXIN_API_KEY);
         return MD5Utils.getMessageDigest(stringBuilder.toString().getBytes()).toUpperCase();
     }
 
@@ -286,7 +338,7 @@ public class GoodsPreviewActivity extends AppCompatActivity {
     private String toXml(HashMap<String, String> hashMap) {
         StringBuilder stringBuilder = new StringBuilder();
         Iterator iter = hashMap.entrySet().iterator();
-        Log.e("HASH_MAP",hashMap.toString());
+        Log.e("HASH_MAP", hashMap.toString());
         stringBuilder.append("<xml>");
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();

@@ -2,6 +2,8 @@ package com.xiaomabao.weidian.ui;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.ViewConfiguration;
 
 public abstract class EndlessRecyclerOnScrollListener extends
         RecyclerView.OnScrollListener {

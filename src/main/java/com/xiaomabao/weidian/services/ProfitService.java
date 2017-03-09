@@ -1,5 +1,8 @@
 package com.xiaomabao.weidian.services;
 
+import android.util.Log;
+
+import com.xiaomabao.weidian.defines.Const;
 import com.xiaomabao.weidian.models.BindCard;
 import com.xiaomabao.weidian.models.Status;
 import com.xiaomabao.weidian.models.WithdrawRecord;
@@ -16,8 +19,8 @@ import retrofit.http.POST;
 import rx.Observable;
 
 public class ProfitService {
-    private static final String USER_SERVER_URL = "http://vapi.xiaomabao.com";
-//    private static final String USER_SERVER_URL = "http://192.168.10.202";
+//    private static final String USER_SERVER_URL = "http://vapi.xiaomabao.com";
+    private static final String USER_SERVER_URL = Const.BASE_URL;
 
     private ProfitApi mApi;
 
@@ -62,6 +65,7 @@ public class ProfitService {
         hashMap.put("branch_bank",branch_bank);
         hashMap.put("card_no",card_no);
         hashMap.put("mobile_phone",mobile_phone);
+        Log.d("map",hashMap.toString());
         return CommonUtil.appendParams(hashMap);
     }
 

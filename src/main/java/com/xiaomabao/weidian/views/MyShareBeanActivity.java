@@ -18,9 +18,9 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.xiaomabao.weidian.AppContext;
-import com.xiaomabao.weidian.Const;
 import com.xiaomabao.weidian.R;
 import com.xiaomabao.weidian.adapters.MyBeanAdapter;
+import com.xiaomabao.weidian.defines.Const;
 import com.xiaomabao.weidian.models.Bean;
 import com.xiaomabao.weidian.presenters.BeanPresenter;
 import com.xiaomabao.weidian.services.BeanService;

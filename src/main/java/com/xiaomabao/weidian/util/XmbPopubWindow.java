@@ -21,13 +21,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.orhanobut.logger.Logger;
 import com.xiaomabao.weidian.R;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -93,7 +91,7 @@ public class XmbPopubWindow {
     }
 
     public static void showShare(Activity activity, String share_img_path, String share_path, HashMap<String, String> hashMap) {
-        Logger.e(hashMap.toString());
+        LogUtils.loge(hashMap.toString());
         View contentView = LayoutInflater.from(activity).inflate(R.layout.popwindow_share, null);
         PopupWindow shareWindow = new PopupWindow(contentView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT, true);
         shareWindow.setTouchable(true);
@@ -168,7 +166,7 @@ public class XmbPopubWindow {
     }
 
     public static void showShopChooseWindow(Activity activity, HashMap<String, String> hashMap, String ShareType, String type) {
-        Logger.e(hashMap.toString());
+        LogUtils.loge(hashMap.toString());
         View contentView = LayoutInflater.from(activity).inflate(R.layout.popwindow_shop_choose, null);
         PopupWindow shopChooseWindow = new PopupWindow(contentView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT, true);
         RecyclerView shopList = (RecyclerView) contentView.findViewById(R.id.shop_list_recycler);
@@ -256,7 +254,7 @@ public class XmbPopubWindow {
     }
 
     public static void showGoodsShare(Activity activity, HashMap<String, String> hashMap, String shareId, String type) {
-        Logger.e(hashMap.toString());
+        LogUtils.loge(hashMap.toString());
         View contentView = LayoutInflater.from(activity).inflate(R.layout.popwindow_goods_share, null);
         PopupWindow shareWindow = new PopupWindow(contentView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT, true);
         shareWindow.setTouchable(true);

@@ -31,7 +31,8 @@
                 android:layout_centerVertical="true"
                 android:padding="@dimen/dimen_30_dip"
                 android:scaleType="fitXY"
-                android:src="@mipmap/back_arrow"/>
+                android:src="@mipmap/back_arrow"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/search_text"
@@ -81,12 +82,12 @@
     </android.support.v7.widget.RecyclerView>
 
     <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/recyclerViewSecond"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/recyclerView"-->
-        <!--android:background="@color/color_white"-->
-        <!--android:paddingLeft="@dimen/dimen_45_dip">-->
+    <!--android:id="@+id/recyclerViewSecond"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/recyclerView"-->
+    <!--android:background="@color/color_white"-->
+    <!--android:paddingLeft="@dimen/dimen_45_dip">-->
     <!--</android.support.v7.widget.RecyclerView>-->
 
     <android.support.v7.widget.RecyclerView
@@ -153,9 +154,9 @@
     <include
         android:id="@+id/anim_loading"
         layout="@layout/loading_anim"
-        android:layout_below="@id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/recyclerView"
         android:layout_marginTop="@dimen/dimen_93_dip"/>
 
     <ImageView
@@ -164,8 +165,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/dimen_100_dip"
-        android:layout_marginRight="@dimen/dimen_20_dip"
+        android:layout_marginBottom="@dimen/dimen_64_dip"
+        android:layout_marginRight="@dimen/dimen_36_dip"
         android:src="@mipmap/quick_share"
         android:visibility="gone"/>
 

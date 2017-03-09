@@ -42,7 +42,7 @@ public class CheckTokenPresenter {
                     public void onNext(Status status) {
                         if(status.status == 0){
                             XmbPopubWindow.showAlert(mView,status.info);
-                            mView.jumpToLoginView();
+                            mView.jumpToShopIndexAndResetToken();
                         }else{
                             mView.jumpToShopIndex();
                         }

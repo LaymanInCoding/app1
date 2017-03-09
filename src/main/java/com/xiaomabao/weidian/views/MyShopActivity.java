@@ -125,7 +125,7 @@ public class MyShopActivity extends AppCompatActivity {
         shopGoodsAdapter.setOnClickListener(new ShopGoodsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                XmbIntent.startIntentGoodsPreview(MyShopActivity.this,shopGoodsList.get(position).goods_name,shopGoodsList.get(position).buy_url,shopGoodsList.get(position).share_url);
+                XmbIntent.startIntentGoodsPreview(MyShopActivity.this,shopGoodsList.get(position).goods_name,shopGoodsList.get(position).preview_url,shopGoodsList.get(position).share_url);
             }
 
             @Override

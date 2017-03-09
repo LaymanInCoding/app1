@@ -7,7 +7,9 @@ import com.xiaomabao.weidian.AppContext;
 import com.xiaomabao.weidian.defines.Const;
 import com.xiaomabao.weidian.models.Status;
 import com.xiaomabao.weidian.models.UserLogin;
+import com.xiaomabao.weidian.rx.RxBus;
 import com.xiaomabao.weidian.services.UserService;
+import com.xiaomabao.weidian.util.LogUtils;
 import com.xiaomabao.weidian.util.XmbPopubWindow;
 import com.xiaomabao.weidian.views.PhoneLoginActivity;
 
@@ -26,7 +28,8 @@ public class PhoneLoginPresenter {
         loginView = view;
     }
 
-    public void checkLogin(HashMap<String,String> hashMap) {
+    public void checkLogin(HashMap<String, String> hashMap) {
+        LogUtils.loge(hashMap.toString());
         mUser.getApi()
                 .login_by_code(hashMap)
                 .subscribeOn(Schedulers.newThread())
@@ -45,17 +48,18 @@ public class PhoneLoginPresenter {
 
                     @Override
                     public void onNext(UserLogin userLogin) {
-                        if(userLogin.status == 0){
-                            XmbPopubWindow.showAlert(loginView,userLogin.info);
-                        }else{
-                            AppContext.saveShopBaseInfo(loginView,userLogin.data);
+                        if (userLogin.status == 0) {
+                            XmbPopubWindow.showAlert(loginView, userLogin.info);
+                        } else {
+                            AppContext.saveShopBaseInfo(loginView, userLogin.data);
+                            RxBus.getInstance().post(Const.LOG_IN_OUT,true);
                             loginView.jumpToShopIndex();
                         }
                     }
                 });
     }
 
-    public void sendCode(HashMap<String,String> hashMap) {
+    public void sendCode(HashMap<String, String> hashMap) {
         mUser.getApi()
                 .send_login_code(hashMap)
                 .subscribeOn(Schedulers.newThread())
@@ -74,7 +78,7 @@ public class PhoneLoginPresenter {
 
                     @Override
                     public void onNext(Status status) {
-                        XmbPopubWindow.showAlert(loginView,status.info);
+                        XmbPopubWindow.showAlert(loginView, status.info);
                     }
                 });
     }

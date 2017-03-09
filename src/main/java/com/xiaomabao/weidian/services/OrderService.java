@@ -1,5 +1,6 @@
 package com.xiaomabao.weidian.services;
 
+import com.xiaomabao.weidian.defines.Const;
 import com.xiaomabao.weidian.models.OrderDetail;
 import com.xiaomabao.weidian.models.OrderList;
 import com.xiaomabao.weidian.models.OrderType;
@@ -18,8 +19,8 @@ import rx.Observable;
 
 public class OrderService {
 
-    private static final String ORDER_SERVER_URL = "http://vapi.xiaomabao.com";
-//    private static final String ORDER_SERVER_URL = "http://192.168.10.202";
+//    private static final String ORDER_SERVER_URL = "http://vapi.xiaomabao.com";
+    private static final String ORDER_SERVER_URL = Const.BASE_URL;
 
     private OrderApi api;
 
