@@ -50,6 +50,7 @@ public class VipGoodsAdapter extends RecyclerView.Adapter<VipGoodsAdapter.ViewHo
         Goods goods = goodsList.get(position);
         Glide.with(context)
                 .load(goods.goods_thumb)
+                .crossFade()
                 .dontAnimate()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.goodsThumbImageView);

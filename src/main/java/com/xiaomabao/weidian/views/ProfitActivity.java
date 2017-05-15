@@ -12,6 +12,7 @@ import com.xiaomabao.weidian.R;
 import com.xiaomabao.weidian.models.ShopProfit;
 import com.xiaomabao.weidian.presenters.ProfitPresenter;
 import com.xiaomabao.weidian.services.ShopService;
+import com.xiaomabao.weidian.util.LogUtils;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -60,7 +61,9 @@ public class ProfitActivity extends AppCompatActivity {
             intent.putExtra("balance", profit.data.available_balance);
             startActivity(intent);
         } else {
-            startActivityForResult(new Intent(this, BindCardActivity.class), REQUEST_BINDCARD_CODE);
+            Intent intent = new Intent(this, BindCardActivity.class);
+            intent.putExtra("type", "bind");
+            startActivityForResult(intent, REQUEST_BINDCARD_CODE);
         }
     }
 
@@ -107,6 +110,7 @@ public class ProfitActivity extends AppCompatActivity {
 
     public void onResume() {
         super.onResume();
+        LogUtils.loge("OnResume");
         initApi();
         MobclickAgent.onResume(this);
     }

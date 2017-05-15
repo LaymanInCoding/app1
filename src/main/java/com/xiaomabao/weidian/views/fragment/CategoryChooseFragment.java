@@ -1,17 +1,14 @@
 package com.xiaomabao.weidian.views.fragment;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,7 +25,6 @@ import com.xiaomabao.weidian.models.Brand;
 import com.xiaomabao.weidian.models.Category;
 import com.xiaomabao.weidian.models.Goods;
 import com.xiaomabao.weidian.presenters.CategoryChoosePresenter;
-import com.xiaomabao.weidian.rx.RxBus;
 import com.xiaomabao.weidian.rx.RxManager;
 import com.xiaomabao.weidian.services.GoodsService;
 import com.xiaomabao.weidian.ui.EndlessRecyclerOnScrollListener;
@@ -40,6 +36,7 @@ import com.xiaomabao.weidian.util.XmbPopubWindow;
 import com.xiaomabao.weidian.views.BrandTopicActivity;
 import com.xiaomabao.weidian.views.PhoneLoginActivity;
 import com.xiaomabao.weidian.views.SearchActivity;
+import com.xiaomabao.weidian.views.SubCatrgoryActivity;
 import com.xiaomabao.weidian.views.WebViewActivity;
 
 import java.util.ArrayList;
@@ -219,7 +216,11 @@ public class CategoryChooseFragment extends Fragment {
         categories.clear();
         categoryAdapter.notifyDataSetChanged();
         goodsList.clear();
+        goodsAdapter.notifyDataSetChanged();
+        brandsList.clear();
+        brandAdapter.notifyDataSetChanged();
         categoriesChild.clear();
+        childCategoryAdapter.notifyDataSetChanged();
         page = 1;
         brand_page = 1;
         toolbar_right.setVisibility(View.INVISIBLE);
@@ -295,10 +296,15 @@ public class CategoryChooseFragment extends Fragment {
 
         childCategoryAdapter = new ChildCategoryAdapter(getContext(), categoriesChild);
         childCategoryAdapter.setOnClickListener((int position) -> {
-            if (!categoriesChild.get(position).cat_id.equals(cat_id)) {
+            if (categoriesChild.get(position).show_son.equals("0")) {
                 cat_id = categoriesChild.get(position).cat_id;
                 keyword = "";
                 requestGoodsList(1);
+            } else {
+                Intent intent = new Intent(getContext(), SubCatrgoryActivity.class);
+                intent.putExtra("cat_id", categoriesChild.get(position).cat_id);
+                intent.putExtra("type","normal");
+                startActivity(intent);
             }
             if (searchText.isFocused()) {
                 InputSoftUtil.hideSoftInput(getContext(), searchText);
@@ -452,25 +458,23 @@ public class CategoryChooseFragment extends Fragment {
     }
 
     public void handlerBrandRecycleView(List<Brand> list) {
-        if (brand_page == 1) {
-            brandsList.clear();
+
+        if (list.size() < 20) {
+            brandHeaderAdapter.removeFooterView();
+            recyclerViewBrand.removeOnScrollListener(brandListener);
         } else {
-            if (list.size() < 20) {
-                brandHeaderAdapter.removeFooterView();
-                recyclerViewBrand.removeOnScrollListener(brandListener);
-            } else {
-                brandHeaderAdapter.removeFooterView();
-                brandHeaderAdapter.addFooterView(LayoutInflater.from(getContext()).inflate(R.layout.load_more_anim, recyclerViewBrand, false));
-                recyclerViewBrand.removeOnScrollListener(brandListener);
-                brandListener = new EndlessRecyclerOnScrollListener(layoutManagerBrand) {
-                    @Override
-                    public void onLoadMore(int currentPage) {
-                        brand_page += 1;
-                        requestBrandList();
-                    }
-                };
-                recyclerViewBrand.addOnScrollListener(brandListener);
-            }
+            brandHeaderAdapter.removeFooterView();
+            brandHeaderAdapter.addFooterView(LayoutInflater.from(getContext()).inflate(R.layout.load_more_anim, recyclerViewBrand, false));
+            recyclerViewBrand.removeOnScrollListener(brandListener);
+            brandListener = new EndlessRecyclerOnScrollListener(layoutManagerBrand) {
+                @Override
+                public void onLoadMore(int currentPage) {
+                    LogUtils.loge("loadmore");
+                    brand_page += 1;
+                    requestBrandList();
+                }
+            };
+            recyclerViewBrand.addOnScrollListener(brandListener);
         }
         brandsList.addAll(list);
         brandHeaderAdapter.notifyDataSetChanged();

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_92_dip"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp"
+        app:popupTheme="@style/Dark.Overlay.LightPopup">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_white"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dimen_30_dip"
+                android:scaleType="fitXY"
+                android:src="@mipmap/back_arrow"/>
+
+            <TextView
+                android:id="@+id/search_text"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_60_dip"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_80_dip"
+                android:layout_marginRight="@dimen/dimen_110_dip"
+                android:background="@drawable/goods_select_bg"
+                android:drawableLeft="@mipmap/search"
+                android:drawablePadding="@dimen/dimen_18_dip"
+                android:gravity="center_vertical"
+                android:hint="@string/good_search_hint"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="@dimen/dimen_30_dip"
+                android:singleLine="true"
+                android:textColor="@color/color_black"
+                android:textSize="@dimen/dimen_26_dip"/>
+
+            <TextView
+                android:id="@+id/toolbar_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@mipmap/sort"
+                android:drawablePadding="@dimen/dimen_10_dip"
+                android:paddingRight="@dimen/dimen_15_dip"
+                android:text="@string/sort"
+                android:textColor="#555555"
+                android:textSize="@dimen/dimen_26_dip"/>
+
+            <ImageView
+                android:id="@+id/toolbar_right_share"
+                android:visibility="gone"
+                android:layout_width="@dimen/dimen_70_dip"
+                android:layout_height="@dimen/dimen_40_dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:paddingRight="@dimen/dimen_30_dip"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/share_good"/>
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/goods_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="@dimen/dimen_10_dip"
+        android:background="@color/color_white"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+    </android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout
+        android:id="@+id/sort_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#66000000"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="@dimen/dimen_272_dip"
+            android:layout_height="@dimen/dimen_360_dip"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dimen_22_dip"
+            android:layout_marginTop="@dimen/dimen_92_dip"
+            android:background="@drawable/goods_sort_bg"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/sort_default"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_89_dip">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_18_dip"
+                    android:gravity="center_vertical"
+                    android:text="@string/sort_default"/>
+
+                <ImageView
+                    android:id="@+id/sort_default_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dimen_20_dip"
+                    android:src="@mipmap/on_sale"/>
+            </RelativeLayout>
+
+            <include layout="@layout/line_h_color_e5"/>
+
+            <RelativeLayout
+                android:id="@+id/sort_profit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_89_dip">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_18_dip"
+                    android:gravity="center_vertical"
+                    android:text="@string/sort_profit"/>
+
+                <ImageView
+                    android:id="@+id/sort_profit_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dimen_20_dip"
+                    android:src="@mipmap/on_sale"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+
+            <include layout="@layout/line_h_color_e5"/>
+
+            <RelativeLayout
+                android:id="@+id/sort_price_high"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_89_dip">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_18_dip"
+                    android:gravity="center_vertical"
+                    android:text="@string/sort_price_high"/>
+
+                <ImageView
+                    android:id="@+id/sort_price_high_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dimen_20_dip"
+                    android:src="@mipmap/on_sale"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+
+            <include layout="@layout/line_h_color_e5"/>
+
+            <RelativeLayout
+                android:id="@+id/sort_price_low"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_90_dip">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_18_dip"
+                    android:gravity="center_vertical"
+                    android:text="@string/sort_price_low"/>
+
+                <ImageView
+                    android:id="@+id/sort_price_low_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dimen_20_dip"
+                    android:src="@mipmap/on_sale"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/recyclerView">
+
+        <LinearLayout
+            android:id="@+id/no_goods_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f3f3f3"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/dimen_200_dip"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/wushous"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_40_dip"
+                android:maxLines="1"
+                android:text="@string/no_goods_result"
+                android:textColor="#666666"
+                android:textSize="@dimen/dimen_24_dip"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/onekey_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/dimen_64_dip"
+        android:layout_marginRight="@dimen/dimen_36_dip"
+        android:src="@mipmap/quick_share"/>
+
+    <include
+        android:id="@+id/anim_loading"
+        layout="@layout/loading_anim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dimen_93_dip"/>
+
+</RelativeLayout>

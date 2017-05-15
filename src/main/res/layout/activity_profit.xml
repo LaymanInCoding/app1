@@ -38,6 +38,13 @@
                 android:textColor="#555555"
                 android:text="@string/available_balance"
                 android:layout_marginTop="@dimen/dimen_14_dip"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dimen_24_dip"
+                android:textColor="#555555"
+                android:text="@string/tip_available_balance"
+                android:layout_marginTop="@dimen/dimen_10_dip"/>
         </LinearLayout>
         <include layout="@layout/line_h_color_e5" />
         <LinearLayout

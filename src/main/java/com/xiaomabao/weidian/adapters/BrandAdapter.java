@@ -62,6 +62,7 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> 
         Glide.with(context)
                 .load(brand.banner)
                 .placeholder(R.mipmap.brand_preload)
+                .crossFade()
                 .dontAnimate()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.bannerImageView);

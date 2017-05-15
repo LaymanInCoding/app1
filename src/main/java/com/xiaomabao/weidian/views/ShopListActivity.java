@@ -15,14 +15,13 @@ import android.widget.TextView;
 import com.xiaomabao.weidian.AppContext;
 import com.xiaomabao.weidian.R;
 import com.xiaomabao.weidian.adapters.ShopInfoAdapter;
-import com.xiaomabao.weidian.models.ShopBase;
+import com.xiaomabao.weidian.defines.Const;
 import com.xiaomabao.weidian.presenters.ShopListPresenter;
-import com.xiaomabao.weidian.presenters.ShopSettingPresenter;
+import com.xiaomabao.weidian.rx.RxBus;
 import com.xiaomabao.weidian.services.ShopService;
 import com.xiaomabao.weidian.ui.HeaderViewRecyclerAdapter;
 import com.xiaomabao.weidian.util.XmbPopubWindow;
-
-import java.util.ArrayList;
+import com.xiaomabao.weidian.views.fragment.MineFragment;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -80,13 +79,13 @@ public class ShopListActivity extends Activity {
         shopInfoAdapter.setOnItemClickListener(new ShopInfoAdapter.OnItemClickListener() {
             @Override
             public void OnDeleteShop(int position) {
-                if(AppContext.instance().getShopShareInfoArrayList().size()==1){
-                    XmbPopubWindow.showAlert(ShopListActivity.this,"请保留一个店铺哟");
-                    return ;
+                if (AppContext.instance().getShopShareInfoArrayList().size() == 1) {
+                    XmbPopubWindow.showAlert(ShopListActivity.this, "请保留一个店铺哟");
+                    return;
                 }
                 new AlertDialog.Builder(ShopListActivity.this).setMessage("确定删除吗?")
                         .setCancelable(true).setNegativeButton("取消", null).setPositiveButton("确定", (dialog, which) -> {
-                    mPresenter.deleteShop(ShopService.gen_delete_shop_params(AppContext.getToken(ShopListActivity.this), AppContext.instance().getShopShareInfoArrayList().get(position).id),position);
+                    mPresenter.deleteShop(ShopService.gen_delete_shop_params(AppContext.getToken(ShopListActivity.this), AppContext.instance().getShopShareInfoArrayList().get(position).id), position);
                 }).show();
             }
 
@@ -121,10 +120,16 @@ public class ShopListActivity extends Activity {
     public void setDefaultCallback(String share_id) {
         AppContext.instance().setDefaultShareInfo(share_id);
         mRecyclerAdapter.notifyDataSetChanged();
+        MineFragment.animTime = 1;
 //        setResult(RESULT_OK);
     }
-    public void setDeleteCallback(int  position) {
+
+    public void setDeleteCallback(int position) {
         AppContext.instance().removeShopShareInfoByIndex(position);
+        if (AppContext.instance().getShopShareInfoArrayList().size() == 1) {
+            RxBus.getInstance().post(Const.LOG_IN_OUT, false);
+            MineFragment.animTime = 1;
+        }
         mRecyclerAdapter.notifyDataSetChanged();
     }
 

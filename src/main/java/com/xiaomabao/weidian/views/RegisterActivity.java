@@ -28,7 +28,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class RegisterActivity extends AppCompatActivity {
-    @BindString(R.string.new_user_register) String toolbarTitle;
+    @BindString(R.string.new_user_register)
+    String toolbarTitle;
     @BindView(R.id.toolbar_title)
     TextView toolbarTitleText;
 
@@ -40,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText userPasswordEditText;
     @BindView(R.id.invitation_code)
     EditText invitationCodeEditText;
-//    @BindView(R.id.shop_code)
+    //    @BindView(R.id.shop_code)
 //    EditText shopCodeEditText;
     @BindView(R.id.shop_agreement)
     TextView shopAgreementTextView;
@@ -51,35 +52,44 @@ public class RegisterActivity extends AppCompatActivity {
     private RegisterPresenter mPresenter;
     int agreement = 1;
 
-    @OnClick(R.id.back) void back() {
+    @OnClick(R.id.back)
+    void back() {
         finish();
     }
-//    @OnClick(R.id.get_shop_code) void get_shop_code() {
+
+    //    @OnClick(R.id.get_shop_code) void get_shop_code() {
 //        startActivity(new Intent(this,ImmediatelyShopActivity.class));
 //    }
-    @OnClick(R.id.checked_img) void agree() {
-        if (agreement == 1){
+    @OnClick(R.id.checked_img)
+    void agree() {
+        if (agreement == 1) {
             agreement = 0;
             checkedImageView.setImageResource(R.mipmap.pay_normal);
-        }else{
+        } else {
             checkedImageView.setImageResource(R.mipmap.pay_selected);
             agreement = 1;
         }
     }
-    @OnClick(R.id.shop_agreement) void jumpToAgreement() {
-        startActivity(new Intent(this,AgreementActivity.class));
+
+    @OnClick(R.id.shop_agreement)
+    void jumpToAgreement() {
+        startActivity(new Intent(this, AgreementActivity.class));
     }
-    @OnClick(R.id.get_phone_code) void get_phone_code() {
+
+    @OnClick(R.id.get_phone_code)
+    void get_phone_code() {
         String username = userPhoneEditText.getText().toString();
-        if(!CommonUtil.isMobilePhone(username)){
+        if (!CommonUtil.isMobilePhone(username)) {
             XmbPopubWindow.showAlert(this, Const.MOBILE_REGEX_ERROR);
             return;
         }
         XmbPopubWindow.showTranparentLoading(RegisterActivity.this);
         mPresenter.sendCode(UserService.gen_send_code_params(username));
     }
-    @OnClick(R.id.reg_submit) void register() {
-        if (agreement == 0){
+
+    @OnClick(R.id.reg_submit)
+    void register() {
+        if (agreement == 0) {
             XmbPopubWindow.showAlert(this, Const.AGREEMENT);
             return;
         }
@@ -88,15 +98,15 @@ public class RegisterActivity extends AppCompatActivity {
         String user_password = userPasswordEditText.getText().toString();
         String invitation_code = invitationCodeEditText.getText().toString();
 //        String shop_code = shopCodeEditText.getText().toString();
-        if(!CommonUtil.isMobilePhone(username)){
+        if (!CommonUtil.isMobilePhone(username)) {
             XmbPopubWindow.showAlert(this, Const.MOBILE_REGEX_ERROR);
             return;
         }
-        if(!CommonUtil.validPass(user_password)){
+        if (!CommonUtil.validPass(user_password)) {
             XmbPopubWindow.showAlert(this, Const.PASSWORD_REGEX_ERROR);
             return;
         }
-        if(!CommonUtil.validCode(user_code)){
+        if (!CommonUtil.validCode(user_code)) {
             XmbPopubWindow.showAlert(this, Const.CODE_REGEX_ERROR);
             return;
         }
@@ -105,7 +115,7 @@ public class RegisterActivity extends AppCompatActivity {
 //            return;
 //        }
         XmbPopubWindow.showTranparentLoading(RegisterActivity.this);
-        mPresenter.register(UserService.gen_register_params(username,user_code, MD5Utils.getMD5Code(user_password),invitation_code));
+        mPresenter.register(UserService.gen_register_params(username, user_code, MD5Utils.getMD5Code(user_password), invitation_code));
 //        mPresenter.register(UserService.gen_register_params(username,user_code, MD5Utils.getMD5Code(user_password)));
     }
 
@@ -118,23 +128,24 @@ public class RegisterActivity extends AppCompatActivity {
         initApiInfo();
     }
 
-    public void initApiInfo(){
+    public void initApiInfo() {
         mService = new UserService();
         mPresenter = new RegisterPresenter(this, mService);
     }
 
-    public void callback(){
-        Observable<Long> observable = Observable.timer(2, TimeUnit.SECONDS, Schedulers.io());
+    public void callback() {
+        Observable<Long> observable = Observable.timer(1, TimeUnit.SECONDS, Schedulers.io());
         observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((Long) -> {
-                    startActivity(new Intent(RegisterActivity.this,PhoneLoginActivity.class));
+//                    setResult(RESULT_OK);
+//                    startActivity(new Intent(RegisterActivity.this, PhoneLoginActivity.class));
                     finish();
-                } );
+                });
     }
 
-    public void displayTitle(){
+    public void displayTitle() {
         toolbarTitleText.setText(toolbarTitle);
         shopAgreementTextView.setText(Html.fromHtml(getString(R.string.shop_agreement)));
     }
@@ -143,6 +154,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onResume();
         MobclickAgent.onResume(this);
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);

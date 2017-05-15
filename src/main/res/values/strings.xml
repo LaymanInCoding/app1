@@ -102,6 +102,7 @@
     <string name="withdraw_record">提现记录</string>
     <string name="no_withdraw_record">暂无提现记录</string>
     <string name="total_withdraw">总提现金额:</string>
+    <string name="tip_available_balance">小提示:麻包卡支付部分暂不支持返现</string>
 
     <string name="my_share_bean">我的共享豆</string>
 

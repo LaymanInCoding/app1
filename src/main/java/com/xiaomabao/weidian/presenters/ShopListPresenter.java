@@ -1,17 +1,12 @@
 package com.xiaomabao.weidian.presenters;
 
 import android.util.Log;
-import android.widget.ImageView;
 
-import com.xiaomabao.weidian.AppContext;
-import com.xiaomabao.weidian.R;
 import com.xiaomabao.weidian.defines.Const;
 import com.xiaomabao.weidian.models.Status;
 import com.xiaomabao.weidian.services.ShopService;
-import com.xiaomabao.weidian.ui.HeaderViewRecyclerAdapter;
 import com.xiaomabao.weidian.util.XmbPopubWindow;
 import com.xiaomabao.weidian.views.ShopListActivity;
-import com.xiaomabao.weidian.views.ShopSettingActivity;
 
 import java.util.HashMap;
 
@@ -30,8 +25,9 @@ public class ShopListPresenter {
         mService = service;
         mView = view;
     }
-    public void deleteShop(HashMap<String,String> hashMap, int position){
-        Log.e("data",hashMap.toString());
+
+    public void deleteShop(HashMap<String, String> hashMap, int position) {
+        Log.e("data", hashMap.toString());
         mService.getApi()
                 .delete_shop_share(hashMap)
                 .subscribeOn(Schedulers.newThread())
@@ -50,19 +46,20 @@ public class ShopListPresenter {
 
                     @Override
                     public void onNext(Status status) {
-                        if (status.status ==1) {
-                            XmbPopubWindow.showAlert(mView,status.info);
+                        if (status.status == 1) {
+                            XmbPopubWindow.showAlert(mView, status.info);
                             mView.setDeleteCallback(position);
-                        }else{
-                            XmbPopubWindow.showAlert(mView,status.info);
-                            }
+                        } else {
+                            XmbPopubWindow.showAlert(mView, status.info);
                         }
+                    }
 
                 });
 
     }
-    public void setDefaultShop(HashMap<String,String> hashMap){
-        Log.e("data",hashMap.toString());
+
+    public void setDefaultShop(HashMap<String, String> hashMap) {
+        Log.e("data", hashMap.toString());
         mService.getApi()
                 .set_default_shop(hashMap)
                 .subscribeOn(Schedulers.newThread())
@@ -81,7 +78,7 @@ public class ShopListPresenter {
 
                     @Override
                     public void onNext(Status status) {
-                        if (status.status ==1) {
+                        if (status.status == 1) {
                             mView.setDefaultCallback(hashMap.get("share_id"));
                         }
                     }

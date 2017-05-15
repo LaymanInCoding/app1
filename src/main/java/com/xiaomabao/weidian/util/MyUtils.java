@@ -39,4 +39,39 @@ public class MyUtils {
     public static View getRootView(Activity context) {
         return ((ViewGroup) context.findViewById(android.R.id.content)).getChildAt(0);
     }
+    /**
+     * 校验银行卡卡号
+     *
+     * @param bankNumber
+     * @return
+     */
+    public static boolean checkBankCard(String bankNumber) {
+        char[] cc = bankNumber.toCharArray();
+        int[] n = new int[cc.length + 1];
+        int j = 1;
+        for (int i = cc.length - 1; i >= 0; i--) {
+            n[j++] = cc[i] - '0';
+        }
+        int even = 0;
+        int odd = 0;
+        for (int i = 1; i < n.length; i++) {
+            if (i % 2 == 0) {
+                int temp = n[i] * 2;
+                if (temp < 10) {
+                    even += temp;
+                } else {
+                    temp = temp - 9;
+                    even += temp;
+                }
+            } else {
+                odd += n[i];
+            }
+        }
+
+        int total = even + odd;
+        if (total % 10 == 0)
+            return true;
+        return false;
+
+    }
 }

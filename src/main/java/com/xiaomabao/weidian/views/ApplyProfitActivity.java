@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -24,7 +25,10 @@ import butterknife.OnClick;
 
 public class ApplyProfitActivity extends AppCompatActivity {
 
-    @BindString(R.string.apply_profit) String toolbarText;
+    private static final int MODIFY_CARD_CODE = 0X01;
+
+    @BindString(R.string.apply_profit)
+    String toolbarText;
 
     @BindView(R.id.toolbar_title)
     TextView toolBarTextView;
@@ -38,21 +42,42 @@ public class ApplyProfitActivity extends AppCompatActivity {
     TextView cardNoTextView;
     @BindView(R.id.edit_profit)
     EditText editText;
+    @BindView(R.id.save_shop)
+    TextView modifyText;
 
-    @OnClick(R.id.back) void back() {
+    @OnClick(R.id.save_shop)
+    void modifyCardInfo() {
+        Intent intent = new Intent(this, BindCardActivity.class);
+        intent.putExtra("type", "modify");
+        startActivityForResult(intent, MODIFY_CARD_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == MODIFY_CARD_CODE) {
+            if (resultCode == RESULT_OK) {
+                setView();
+            }
+        }
+    }
+
+    @OnClick(R.id.back)
+    void back() {
         finish();
     }
-    @OnClick(R.id.confirm) void submit() {
+
+    @OnClick(R.id.confirm)
+    void submit() {
         String extract_profit = editText.getText().toString();
-        if (extract_profit.equals("")){
-            XmbPopubWindow.showAlert(this,"请输入提现金额~");
-        }else{
+        if (extract_profit.equals("")) {
+            XmbPopubWindow.showAlert(this, "请输入提现金额~");
+        } else {
             Double extract_profit_double = Double.parseDouble(extract_profit);
-            if(extract_profit_double < 10.0){
-                XmbPopubWindow.showAlert(this,"申请提现金额不得少于10.00元哦~");
-            }else{
+            if (extract_profit_double < 10.0) {
+                XmbPopubWindow.showAlert(this, "申请提现金额不得少于10.00元哦~");
+            } else {
                 XmbPopubWindow.showTranparentLoading(this);
-                mPresenter.apply_withdraw(ProfitService.gen_apply_withdraw_params(AppContext.getToken(this),extract_profit_double));
+                mPresenter.apply_withdraw(ProfitService.gen_apply_withdraw_params(AppContext.getToken(this), extract_profit_double));
             }
         }
     }
@@ -62,6 +87,8 @@ public class ApplyProfitActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply_profit);
         ButterKnife.bind(this);
+        modifyText.setVisibility(View.VISIBLE);
+        modifyText.setText("修改");
         setView();
         initApi();
     }
@@ -70,36 +97,40 @@ public class ApplyProfitActivity extends AppCompatActivity {
     ProfitService mService;
     ApplyProfitPresenter mPresenter;
 
-    private void initApi(){
+    private void initApi() {
         mService = new ProfitService();
-        mPresenter = new ApplyProfitPresenter(this,mService);
+        mPresenter = new ApplyProfitPresenter(this, mService);
     }
 
-    protected void setView(){
-        String bank = AppContext.getCardDepositBank(this)+AppContext.getCardBranchBank(this);
+    protected void setView() {
+        String bank = AppContext.getCardDepositBank(this) + AppContext.getCardBranchBank(this);
         toolBarTextView.setText(toolbarText);
         availableBalanceProfitTextView.setText(getIntent().getStringExtra("balance"));
         drawingAccountTextView.setText(AppContext.getCardRealName(this));
         depositBankTextView.setText(bank);
         cardNoTextView.setText(AppContext.getCardNo(this));
-        editText.setFilters(new InputFilter[]{ new InputFilterMinMax("0.00", getIntent().getStringExtra("balance"))});
+        editText.setFilters(new InputFilter[]{new InputFilterMinMax("0.00", getIntent().getStringExtra("balance"))});
         editText.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable edt) {
                 String temp = edt.toString();
                 int posDot = temp.indexOf(".");
                 if (posDot <= 0) return;
-                if (temp.length() - posDot - 1 > 2){
+                if (temp.length() - posDot - 1 > 2) {
                     edt.delete(posDot + 3, posDot + 4);
                 }
             }
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
-            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+            }
+
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+            }
         });
     }
 
-    public void withdrawSuccessResponse(String apply_money){
-        Intent intent = new Intent(ApplyProfitActivity.this,ApplyWithDrawSuccessActivity.class);
-        intent.putExtra("money",apply_money);
+    public void withdrawSuccessResponse(String apply_money) {
+        Intent intent = new Intent(ApplyProfitActivity.this, ApplyWithDrawSuccessActivity.class);
+        intent.putExtra("money", apply_money);
         startActivity(intent);
         finish();
     }

@@ -57,7 +57,6 @@ public class ShopMenuPresenter {
 //                                       XmbPopubWindow.showAlert(mView.getContext(), shopMenu.info);
                                        mView.displayShopBaseInfo();
                                    } else {
-                                       LogUtils.loge("setView");
                                        AppContext.instance().setShopShareInfoArrayList(shopMenu.data.shop_share_info);
                                        AppContext.resetShopInfo(mView.getContext(), shopMenu);
                                        mView.displayShopBaseInfo();

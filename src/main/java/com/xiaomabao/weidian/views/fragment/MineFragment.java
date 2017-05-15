@@ -1,14 +1,10 @@
 package com.xiaomabao.weidian.views.fragment;
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.orhanobut.logger.Logger;
 import com.umeng.analytics.MobclickAgent;
 import com.xiaomabao.weidian.AppContext;
 import com.xiaomabao.weidian.R;
@@ -30,6 +24,8 @@ import com.xiaomabao.weidian.presenters.ShopMenuPresenter;
 import com.xiaomabao.weidian.rx.RxManager;
 import com.xiaomabao.weidian.services.CommonService;
 import com.xiaomabao.weidian.services.ShopService;
+import com.xiaomabao.weidian.ui.RiseNumberTextView;
+import com.xiaomabao.weidian.util.ImageLoaderUtil;
 import com.xiaomabao.weidian.util.LogUtils;
 import com.xiaomabao.weidian.views.InviteFriendActivity;
 import com.xiaomabao.weidian.views.MyShopActivity;
@@ -42,8 +38,6 @@ import com.xiaomabao.weidian.views.ShopSettingActivity;
 import com.xiaomabao.weidian.views.VipGoodsActivity;
 import com.xiaomabao.weidian.views.WebViewActivity;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -53,6 +47,7 @@ import rx.functions.Action1;
  * Created by de on 2017/3/6.
  */
 public class MineFragment extends Fragment {
+    public static int animTime = 1;
 
     private int SETTING_REQUEST_CODE = 0x01;
     private int EDIT_REQUEST_CODE = 0x02;
@@ -72,13 +67,13 @@ public class MineFragment extends Fragment {
     TextView shop_name;
 
     @BindView(R.id.total_profit)
-    TextView totalProfitTextView;
+    RiseNumberTextView totalProfitTextView;
     @BindView(R.id.today_profit)
-    TextView todayProfitTextView;
+    RiseNumberTextView todayProfitTextView;
     @BindView(R.id.today_orders)
-    TextView todayOrdersTextView;
+    RiseNumberTextView todayOrdersTextView;
     @BindView(R.id.total_visits)
-    TextView todayVisitsTextView;
+    RiseNumberTextView todayVisitsTextView;
 
     ShopMenuPresenter mPresenter;
     ShopService mService;
@@ -184,7 +179,7 @@ public class MineFragment extends Fragment {
         mRxManager.on(Const.LOG_IN_OUT, new Action1<Boolean>() {
             @Override
             public void call(Boolean aBoolean) {
-                if (AppContext.getToken(getContext()).equals("")) {
+                if (aBoolean) {
                     LogUtils.loge("logout");
                     clearShopProfit();
                 } else {
@@ -220,36 +215,12 @@ public class MineFragment extends Fragment {
     private void setView() {
         if (AppContext.instance().getShopShareInfoArrayList().size() == 0) {
             shop_name.setText("请点击头像设置店铺信息");
-            Glide.with(this)
-                    .load(R.mipmap.mitouxiang)
-                    .placeholder(R.mipmap.mitouxiang)
-                    .dontAnimate()
-                    .error(R.mipmap.mitouxiang)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(shop_avatar);
-            Glide.with(this)
-                    .load(R.mipmap.index_top_bg)
-                    .dontAnimate()
-                    .placeholder(R.mipmap.index_top_bg)
-                    .error(R.mipmap.index_top_bg)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(shop_background);
+            ImageLoaderUtil.loadImage(getContext(), shop_avatar);
+            ImageLoaderUtil.loadBackground(getContext(), shop_background);
         } else {
             shop_name.setText(AppContext.getShopName(getContext()).equals("") ? "请点击头像设置店铺信息" : AppContext.getShopName(getContext()));
-            Glide.with(this)
-                    .load(AppContext.getShopAvater(getContext()))
-                    .placeholder(R.mipmap.mitouxiang)
-                    .dontAnimate()
-                    .error(R.mipmap.mitouxiang)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(shop_avatar);
-            Glide.with(this)
-                    .load(AppContext.getShopBackground(getContext()))
-                    .dontAnimate()
-                    .placeholder(R.mipmap.index_top_bg)
-                    .error(R.mipmap.index_top_bg)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(shop_background);
+            ImageLoaderUtil.loadImageByUrl(getContext(), shop_avatar, AppContext.getShopAvater(getContext()));
+            ImageLoaderUtil.loadBackgroundByUrl(getContext(), shop_background, AppContext.getShopBackground(getContext()));
         }
     }
 
@@ -263,36 +234,63 @@ public class MineFragment extends Fragment {
     }
 
     public void clearShopProfit() {
-        setView();
+        shop_name.setText("请登录,当前状态未登录!");
+        ImageLoaderUtil.loadImage(getContext(), shop_avatar);
+        ImageLoaderUtil.loadBackground(getContext(), shop_background);
         totalProfitTextView.setText("0.00");
         todayProfitTextView.setText("0.00");
         todayOrdersTextView.setText("0");
         todayVisitsTextView.setText("0");
     }
 
+    private void setRiseNumber(float totalProfit, float todayProfit) {
+        totalProfitTextView.setDuration(1500);
+        totalProfitTextView.setNumber(totalProfit);
+        totalProfitTextView.start();
+        todayProfitTextView.setDuration(1500);
+        todayProfitTextView.setNumber(todayProfit);
+        todayProfitTextView.start();
+    }
+
+    private void setRiseNumber(int orderNumber, int visitNumber) {
+        todayOrdersTextView.setDuration(1500);
+        todayOrdersTextView.setNumber(orderNumber);
+        todayOrdersTextView.start();
+        todayVisitsTextView.setDuration(1500);
+        todayVisitsTextView.setNumber(visitNumber);
+        todayVisitsTextView.start();
+    }
+
     public void displayShopProfit(ShopStatistics.ShopStatisticsInfo shopStatisticsInfo) {
-        totalProfitTextView.setText(shopStatisticsInfo.profit_total);
-        todayProfitTextView.setText(shopStatisticsInfo.day_wait_profit);
-        todayOrdersTextView.setText(shopStatisticsInfo.day_orders_cnt);
-        todayVisitsTextView.setText(shopStatisticsInfo.visit_total);
+        setRiseNumber(Float.parseFloat(shopStatisticsInfo.profit_total),
+                Float.parseFloat(shopStatisticsInfo.day_wait_profit));
+        setRiseNumber(Integer.parseInt(shopStatisticsInfo.day_orders_cnt),
+                Integer.parseInt(shopStatisticsInfo.visit_total));
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
+        Logger.d("hiddenchange");
         super.onHiddenChanged(hidden);
         if (hidden == false && isFocused == false) {
             CommonPresenter commonPresenter = new CommonPresenter(getActivity(), new CommonService());
             commonPresenter.check_update(CommonService.gen_update_params("android"));
             commonPresenter.check_search_update();
+            mPresenter.getShopProfitInfo(ShopService.gen_statistics_info_params(AppContext.getToken(getContext())));
+            setView();
             isFocused = true;
+            animTime = 2;
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.getShopProfitInfo(ShopService.gen_statistics_info_params(AppContext.getToken(getContext())));
-        setView();
+        if (animTime == 1) {
+//            mPresenter.getShopProfitInfo(ShopService.gen_statistics_info_params(AppContext.getToken(getContext())));
+            setView();
+            animTime = 2;
+        }
         MobclickAgent.onResume(getActivity());
     }
 

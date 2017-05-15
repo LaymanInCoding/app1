@@ -51,6 +51,7 @@ public class ShopGoodsAdapter extends RecyclerView.Adapter<ShopGoodsAdapter.View
         ShopGoods goods = goodsList.get(position);
         Glide.with(context)
                 .load(goods.goods_thumb)
+                .crossFade()
                 .dontAnimate()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.goodsThumbImageView);

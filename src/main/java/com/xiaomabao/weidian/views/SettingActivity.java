@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import com.tencent.smtt.sdk.CookieManager;
-import com.tencent.smtt.sdk.CookieSyncManager;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.tencent.smtt.sdk.CookieManager;
+import com.tencent.smtt.sdk.CookieSyncManager;
 import com.umeng.analytics.MobclickAgent;
 import com.xiaomabao.weidian.AppContext;
 import com.xiaomabao.weidian.R;
@@ -56,7 +56,7 @@ public class SettingActivity extends AppCompatActivity {
         AppContext.clearLoginInfo(this);
         setResult(RESULT_OK);
         removeCookie(this);
-        RxBus.getInstance().post(Const.LOG_IN_OUT, true);
+        RxBus.getInstance().post(Const.LOG_IN_OUT, true); //true : logout
         finish();
     }
 

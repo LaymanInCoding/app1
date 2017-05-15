@@ -4,15 +4,15 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 import com.umeng.analytics.MobclickAgent;
 import com.xiaomabao.weidian.AppContext;
 import com.xiaomabao.weidian.R;
+import com.xiaomabao.weidian.util.LogUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +31,6 @@ public class ShopPreviewActivity extends AppCompatActivity {
         networkErrorView.setVisibility(View.GONE);
         initWebView();
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,26 +40,35 @@ public class ShopPreviewActivity extends AppCompatActivity {
     }
 
     protected void initWebView(){
+        LogUtils.loge(AppContext.getShopPreviewUrl(this));
         webView.loadUrl(AppContext.getShopPreviewUrl(this));
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient(){
+
+            @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon){
                 loadAnimView.setVisibility(View.VISIBLE);
             }
 
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String s) {
                 return true;
+
             }
+            @Override
 
             public void onPageFinished(WebView view, String url) {
                 loadAnimView.setVisibility(View.GONE);
             }
 
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebViewClient.a a) {
+                super.onReceivedError(view, request, a);
                 loadAnimView.setVisibility(View.GONE);
                 networkErrorView.setVisibility(View.VISIBLE);
             }
+
         });
     }
 

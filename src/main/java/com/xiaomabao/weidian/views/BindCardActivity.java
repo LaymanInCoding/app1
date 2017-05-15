@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.beans.ProvinceBean;
 import com.xiaomabao.weidian.models.Region;
+import com.xiaomabao.weidian.util.MyUtils;
 import com.xiaomabao.weidian.util.WheelView;
 import com.xiaomabao.weidian.AppContext;
 import com.xiaomabao.weidian.R;
@@ -153,13 +155,18 @@ public class BindCardActivity extends AppCompatActivity {
             public void onOptionsSelect(int options1, int options2, int options3) {
                 province_name = options1Items.get(options1).getPickerViewText();
                 city_name = options2Items.get(options1).get(options2).getPickerViewText();
-                district_name = options3Items.get(options1).get(options2).get(options3).getPickerViewText();
+                if (options3Items.get(options1).get(options2).size() == 0) {
+                    district_name = "";
+                    mDistrictId = "";
+                } else {
+                    district_name = options3Items.get(options1).get(options2).get(options3).getPickerViewText();
+                    mDistrictId = options3Items.get(options1).get(options2).get(options3).getId();
+                }
                 provinceTextView.setText(province_name);
                 cityTextView.setText(city_name);
                 districtTextView.setText(district_name);
                 mProvinceId = options1Items.get(options1).getId();
                 mCityId = options2Items.get(options1).get(options2).getId();
-                mDistrictId = options3Items.get(options1).get(options2).get(options3).getId();
             }
         });
     }
@@ -202,7 +209,7 @@ public class BindCardActivity extends AppCompatActivity {
     void bind_card() {
         String account_name = accountEditText.getText().toString();
         String branch_bank = branchEditText.getText().toString();
-        String card_no = cardNoEditText.getText().toString();
+        String card_no = cardNoEditText.getText().toString().trim();
         String mobile_phone = phoneEditText.getText().toString();
         if (!CommonUtil.nEmptyStringValid(account_name)) {
             XmbPopubWindow.showAlert(this, "请输入您的姓名~");
@@ -232,6 +239,10 @@ public class BindCardActivity extends AppCompatActivity {
             XmbPopubWindow.showAlert(this, "请输入银行卡卡号~");
             return;
         }
+        if (!MyUtils.checkBankCard(card_no)) {
+            XmbPopubWindow.showAlert(this, "银行卡号格式不正确~");
+            return;
+        }
         if (!CommonUtil.nEmptyStringValid(mobile_phone)) {
             XmbPopubWindow.showAlert(this, "请输入您银行卡绑定的手机号码~");
             return;
@@ -242,7 +253,11 @@ public class BindCardActivity extends AppCompatActivity {
         }
         XmbPopubWindow.showTranparentLoading(this);
         HashMap<String, String> hashMap = ProfitService.gen_bind_card_params(AppContext.getToken(this), account_name, province_name, city_name, district_name, deposit_bank, branch_bank, card_no, mobile_phone);
-        mPresenter.bind_card(hashMap);
+        if (getIntent().getStringExtra("type").equals("bind")) {
+            mPresenter.bind_card(hashMap);
+        } else {
+            mPresenter.modify_card(hashMap);
+        }
     }
 
     @OnClick(R.id.finish)
@@ -298,10 +313,22 @@ public class BindCardActivity extends AppCompatActivity {
         branchEditText.setOnClickListener((view) -> cancelHideWheelView());
         phoneEditText.setOnClickListener((view) -> cancelHideWheelView());
 
-        depositBankTextView.setOnClickListener((view) -> pvOptions1.show());
-        provinceTextView.setOnClickListener((view) -> pvOptions.show());
-        cityTextView.setOnClickListener((view) -> pvOptions.show());
-        districtTextView.setOnClickListener((view) -> pvOptions.show());
+        depositBankTextView.setOnClickListener((view) -> {
+            hideInput();
+            pvOptions1.show();
+        });
+        provinceTextView.setOnClickListener((view) -> {
+            hideInput();
+            pvOptions.show();
+        });
+        cityTextView.setOnClickListener((view) -> {
+            hideInput();
+            pvOptions.show();
+        });
+        districtTextView.setOnClickListener((view) -> {
+            hideInput();
+            pvOptions.show();
+        });
     }
 
     protected void setWheelView() {
@@ -355,6 +382,10 @@ public class BindCardActivity extends AppCompatActivity {
         });
     }
 
+    private void hideInput() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    }
 
     public void bindCardCallback() {
         setResult(RESULT_OK);

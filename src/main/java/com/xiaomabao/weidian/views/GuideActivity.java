@@ -31,8 +31,6 @@ public class GuideActivity extends AppCompatActivity {
     ViewPager viewPager;
 
 
-    private UserService mService;
-    private CheckTokenPresenter mPresenter;
 
     ArrayList<ImageView> images = new ArrayList<>();
     int[] imagesResId = {R.mipmap.guide_page_01, R.mipmap.guide_page_02, R.mipmap.guide_page_03};
@@ -42,40 +40,10 @@ public class GuideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
         ButterKnife.bind(this);
-        initApiInfo();
         initView();
     }
 
-    public void checkIsLogin() {
-        String token = AppContext.getToken(this);
-        if (!token.equals("")) {
-            LogUtils.loge("login");
-            mPresenter.checkToken(UserService.gen_refresh_token_params(token));
-        } else {
-            LogUtils.loge("unlogin");
-            Observable.timer(1, TimeUnit.SECONDS, Schedulers.io())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(Long -> {
-                        startActivity(new Intent(GuideActivity.this, MainActivity.class));
-                        finish();
-                    });
-        }
-    }
-
     protected void initView() {
-        if (AppContext.getIsGuide(this)) {
-            Observable.timer(1, TimeUnit.SECONDS, Schedulers.io())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe((Long) -> {
-//                        checkIsLogin();
-                        String token = AppContext.getToken(this);
-                        LogUtils.loge(token);
-                        mPresenter.checkToken(UserService.gen_refresh_token_params(token));
-                    });
-            return;
-        }
         for (int i = 0; i < 3; i++) {
             ImageView imageView = new ImageView(this);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -84,17 +52,13 @@ public class GuideActivity extends AppCompatActivity {
             if (i == 2) {
                 imageView.setOnClickListener((view) -> {
                     AppContext.setIsGuide(this);
+                    AppContext.setCartUrl(this);
                     startActivity(new Intent(GuideActivity.this, MainActivity.class));
                     finish();
                 });
             }
         }
         viewPager.setAdapter(pagerAdapter);
-    }
-
-    public void initApiInfo() {
-        mService = new UserService();
-        mPresenter = new CheckTokenPresenter(this, mService);
     }
 
     PagerAdapter pagerAdapter = new PagerAdapter() {
@@ -129,40 +93,6 @@ public class GuideActivity extends AppCompatActivity {
         }
 
     };
-
-    public void jumpToShopIndexAndResetToken() {
-        Observable<Long> observable = Observable.timer(3, TimeUnit.SECONDS, Schedulers.io());
-        observable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((Long) -> {
-                    SharedPreferencesUtil.remove(this, "token");
-                    startActivity(new Intent(GuideActivity.this, MainActivity.class));
-                    finish();
-                });
-    }
-
-    public void jumpToShopIndex() {
-        Observable<Long> observable = Observable.timer(3, TimeUnit.SECONDS, Schedulers.io());
-        observable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((Long) -> {
-                    startActivity(new Intent(GuideActivity.this, MainActivity.class));
-                    finish();
-                });
-    }
-
-    public void jumpToLoginView() {
-        Observable<Long> observable = Observable.timer(3, TimeUnit.SECONDS, Schedulers.io());
-        observable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((Long) -> {
-                    startActivity(new Intent(GuideActivity.this, PhoneLoginActivity.class));
-                    finish();
-                });
-    }
 
     public void onResume() {
         super.onResume();

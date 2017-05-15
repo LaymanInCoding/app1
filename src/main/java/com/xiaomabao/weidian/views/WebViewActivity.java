@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.xiaomabao.weidian.AppContext;
 import com.xiaomabao.weidian.R;
 import com.xiaomabao.weidian.defines.Const;
+import com.xiaomabao.weidian.rx.RxBus;
 import com.xiaomabao.weidian.util.MD5Utils;
 import com.xiaomabao.weidian.util.XmbPopubWindow;
 
@@ -215,6 +216,7 @@ public class WebViewActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String prepay_id) {
             gen_wx_pay_req(prepay_id);
+            RxBus.getInstance().post(Const.REFRESH_CART, true);
         }
 
     }

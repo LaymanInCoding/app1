@@ -5,6 +5,7 @@ import com.xiaomabao.weidian.models.Status;
 import com.xiaomabao.weidian.services.UserService;
 import com.xiaomabao.weidian.util.XmbPopubWindow;
 import com.xiaomabao.weidian.views.GuideActivity;
+import com.xiaomabao.weidian.views.WelcomeActivity;
 
 import java.util.HashMap;
 
@@ -13,10 +14,10 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class CheckTokenPresenter {
-    GuideActivity mView;
+    WelcomeActivity mView;
     UserService mUser;
 
-    public CheckTokenPresenter(GuideActivity view, UserService user) {
+    public CheckTokenPresenter(WelcomeActivity view, UserService user) {
         mUser = user;
         mView = view;
     }

@@ -49,7 +49,7 @@ public class AccountLoginPresenter {
                             XmbPopubWindow.showAlert(loginView,userLogin.info);
                         }else{
                             AppContext.saveShopBaseInfo(loginView,userLogin.data);
-                            RxBus.getInstance().post(Const.LOG_IN_OUT,true);
+                            RxBus.getInstance().post(Const.LOG_IN_OUT,false); // false: login
                             loginView.jumpToShopIndex();
                         }
                     }

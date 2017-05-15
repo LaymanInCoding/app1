@@ -1,8 +1,6 @@
 package com.xiaomabao.weidian.presenters;
 
 
-import android.util.Log;
-
 import com.xiaomabao.weidian.AppContext;
 import com.xiaomabao.weidian.defines.Const;
 import com.xiaomabao.weidian.models.Status;
@@ -52,7 +50,7 @@ public class PhoneLoginPresenter {
                             XmbPopubWindow.showAlert(loginView, userLogin.info);
                         } else {
                             AppContext.saveShopBaseInfo(loginView, userLogin.data);
-                            RxBus.getInstance().post(Const.LOG_IN_OUT,true);
+                            RxBus.getInstance().post(Const.LOG_IN_OUT,false); //false : login
                             loginView.jumpToShopIndex();
                         }
                     }

@@ -1,23 +1,18 @@
 package com.xiaomabao.weidian.presenters;
 
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import com.xiaomabao.weidian.AppContext;
 import com.xiaomabao.weidian.defines.Const;
 import com.xiaomabao.weidian.models.ShareInfo;
 import com.xiaomabao.weidian.models.ShopAvatarStatus;
-import com.xiaomabao.weidian.models.Status;
 import com.xiaomabao.weidian.services.ShopService;
 import com.xiaomabao.weidian.util.Device;
 import com.xiaomabao.weidian.util.XmbPopubWindow;
 import com.xiaomabao.weidian.views.ShopSettingActivity;
-
-import org.json.JSONObject;
+import com.xiaomabao.weidian.views.fragment.MineFragment;
 
 import java.io.File;
-import java.util.HashMap;
 
 import retrofit.mime.TypedFile;
 import rx.Observer;
@@ -87,6 +82,7 @@ public class ShopSettingPresenter {
                             AppContext.instance().updateShopShareInfoByIndex(position,shareInfo.data);
                             mView.setResult(mView.RESULT_OK);
                             mView.finishView();
+                            MineFragment.animTime = 1;
                         }
                     }
                 });
@@ -118,6 +114,7 @@ public class ShopSettingPresenter {
                             AppContext.instance().addeShopShareInfoByIndex(shareInfo.data);
                             mView.setResult(mView.RESULT_OK);
                             mView.finishView();
+                            MineFragment.animTime = 1;
                         }
                     }
                 });

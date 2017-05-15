@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -23,6 +22,7 @@ import com.xiaomabao.weidian.services.ShopService;
 import com.xiaomabao.weidian.util.BitmapUtils;
 import com.xiaomabao.weidian.util.InputSoftUtil;
 import com.xiaomabao.weidian.util.XmbPopubWindow;
+import com.xiaomabao.weidian.views.fragment.MineFragment;
 
 import org.hybridsquad.android.library.CropHandler;
 import org.hybridsquad.android.library.CropHelper;
@@ -30,7 +30,6 @@ import org.hybridsquad.android.library.CropParams;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindString;
@@ -87,7 +86,6 @@ public class ShopSettingActivity extends AppCompatActivity implements CropHandle
             mPresenter.updateShop(AppContext.getToken(this),shareId,shop_name,shop_description,shopAvatarFile,shopBackgroundFile,position);
         }else{
             mPresenter.addShop(AppContext.getToken(this),shop_name,shop_description,shopAvatarFile,shopBackgroundFile);
-            setResult(RESULT_OK);
         }
     }
 

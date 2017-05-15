@@ -22,6 +22,8 @@ import com.xiaomabao.weidian.models.Category;
 import com.xiaomabao.weidian.models.Goods;
 import com.xiaomabao.weidian.presenters.VipGoodsPresenter;
 import com.xiaomabao.weidian.services.GoodsService;
+import com.xiaomabao.weidian.ui.EndlessRecyclerOnScrollListener;
+import com.xiaomabao.weidian.ui.HeaderViewRecyclerAdapter;
 import com.xiaomabao.weidian.util.XmbIntent;
 import com.xiaomabao.weidian.util.XmbPopubWindow;
 
@@ -33,9 +35,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import com.xiaomabao.weidian.ui.EndlessRecyclerOnScrollListener;
-import com.xiaomabao.weidian.ui.HeaderViewRecyclerAdapter;
-
 public class VipGoodsActivity extends AppCompatActivity {
     @BindView(R.id.anim_loading)
     View animLoading;
@@ -45,7 +44,7 @@ public class VipGoodsActivity extends AppCompatActivity {
     RecyclerView recyclerViewFirst;
     @BindView(R.id.brand_recyclerView)
     RecyclerView recyclerViewBrand;
-//    @BindView(R.id.recyclerViewSecond)
+    //    @BindView(R.id.recyclerViewSecond)
 //    RecyclerView recyclerViewChild;
     @BindView(R.id.search_text)
     TextView searchTextView;
@@ -213,11 +212,16 @@ public class VipGoodsActivity extends AppCompatActivity {
 
         childCategoryAdapter = new ChildCategoryAdapter(this, categoriesChild);
         childCategoryAdapter.setOnClickListener((int position) -> {
-            if (!categoriesChild.get(position).cat_id.equals(cat_id)) {
+            if (categoriesChild.get(position).show_son.equals("0")) {
                 cat_id = categoriesChild.get(position).cat_id;
                 page = 1;
                 keyword = "";
                 request();
+            } else {
+                Intent intent = new Intent(VipGoodsActivity.this, SubCatrgoryActivity.class);
+                intent.putExtra("cat_id", categoriesChild.get(position).cat_id);
+                intent.putExtra("type", "vip");
+                startActivity(intent);
             }
         });
         GridLayoutManager layoutManagerChild = new GridLayoutManager(this, 4);
@@ -232,31 +236,6 @@ public class VipGoodsActivity extends AppCompatActivity {
             startActivity(intent);
             this.overridePendingTransition(R.anim.pop_right_in, R.anim.pop_right_out);
         });
-//        searchEditText.setOnEditorActionListener((view, keyCode, keyEvent) -> {
-//            if (keyCode == EditorInfo.IME_ACTION_SEARCH) {
-//                keyword = searchEditText.getText().toString();
-//                if (!keyword.trim().equals("")) {
-//                    for (int i = 0; i < categories.size(); i++) {
-//                        if (categories.get(i).cat_id.equals("cat_id")) {
-//                            categories.get(i).selected = 1;
-//                        } else {
-//                            categories.get(i).selected = 0;
-//                        }
-//                    }
-//                    cat_id = "0";
-//                    page = 1;
-//                    request();
-//                    handlerChildCategory(categories.get(0).child);
-//                    categoryAdapter.notifyDataSetChanged();
-//                } else {
-//                    keyword = "";
-//                }
-//                InputSoftUtil.hideSoftInput(this, view);
-//                return true;
-//            } else {
-//                return false;
-//            }
-//        });
     }
 
     public void handlerChildCategory(List<Category.ChildCategory> list) {
@@ -264,10 +243,8 @@ public class VipGoodsActivity extends AppCompatActivity {
         goodsHeaderAdapter.notifyDataSetChanged();
         categoriesChild.addAll(list);
         if (categoriesChild.size() == 0) {
-//            recyclerViewChild.setVisibility(View.GONE);
             goodsHeaderAdapter.removeHeaderView();
         } else {
-//            recyclerViewChild.setVisibility(View.VISIBLE);
             if (goodsHeaderAdapter.getHeaderCount() == 0) {
                 goodsHeaderAdapter.addHeaderView(mView);
             }

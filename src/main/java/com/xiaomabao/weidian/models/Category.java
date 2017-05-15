@@ -15,5 +15,6 @@ public class Category {
     public class ChildCategory{
         public String cat_id;
         public String icon;
+        public String show_son;
     }
 }

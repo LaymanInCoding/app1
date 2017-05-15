@@ -23,9 +23,7 @@ import com.xiaomabao.weidian.defines.Const;
 import com.xiaomabao.weidian.models.TabEntity;
 import com.xiaomabao.weidian.rx.RxManager;
 import com.xiaomabao.weidian.util.LogUtils;
-import com.xiaomabao.weidian.util.XmbPopubWindow;
 import com.xiaomabao.weidian.views.fragment.CategoryChooseFragment;
-import com.xiaomabao.weidian.views.fragment.CategoryTestFragment;
 import com.xiaomabao.weidian.views.fragment.MineFragment;
 import com.xiaomabao.weidian.views.fragment.ShoppingCartFragment;
 
@@ -59,13 +57,14 @@ public class MainActivity extends AppCompatActivity {
     private ShoppingCartFragment mShoppingCartFragment;
     private MineFragment mMineFragment;
     private static int tabLayoutHeight;
-    private RxManager mRxManager = new RxManager();
+    private RxManager mRxManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_main_activity);
         ButterKnife.bind(this);
+        mRxManager = new RxManager();
         initTab();
         initFragment(savedInstanceState);
         mTabLayout.measure(0, 0);

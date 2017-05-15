@@ -22,27 +22,36 @@ public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.ViewHolder> 
 
     private Context context;
     private List<Goods> goodsList;
+    private boolean isVip = false;
 
-    public GoodsAdapter(Context context,List<Goods> goodsList){
+    public void setIsVip(boolean isVip) {
+        this.isVip = isVip;
+    }
+
+
+    public GoodsAdapter(Context context, List<Goods> goodsList) {
         this.context = context;
         this.goodsList = goodsList;
     }
 
+
     private OnItemClickListener onItemClickListener;
 
-    public void setOnClickListener(OnItemClickListener listener){
+    public void setOnClickListener(OnItemClickListener listener) {
         onItemClickListener = listener;
     }
 
-    public interface  OnItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(int position);
+
         void toggleSale(int position);
+
         void shareGood(int position);
     }
 
     @Override
     public GoodsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_goods,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_goods, parent, false);
         return new ViewHolder(view);
     }
 
@@ -51,22 +60,26 @@ public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.ViewHolder> 
         Goods goods = goodsList.get(position);
         Glide.with(context)
                 .load(goods.goods_thumb)
+                .crossFade()
                 .placeholder(R.mipmap.good_preload)
                 .dontAnimate()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.goodsThumbImageView);
+        if (this.isVip) {
+            holder.toggleSaleView.setVisibility(View.GONE);
+        }
         holder.goodsNameTextView.setText(goods.goods_name);
         holder.goodsPriceTextView.setText(goods.weidian_goods_price);
         holder.goodsProfitTextView.setText(goods.weidian_goods_profit);
-        holder.goodsNumberTextView.setText("库存:"+goods.goods_number);
-        if (goods.goods_sale_status == 1){
+        holder.goodsNumberTextView.setText("库存:" + goods.goods_number);
+        if (goods.goods_sale_status == 1) {
             holder.goodsSaleStatusTextView.setText("已上架");
             holder.goodsStatusImageView.setImageResource(R.mipmap.on_sale);
-        }else{
+        } else {
             holder.goodsSaleStatusTextView.setText("未上架");
             holder.goodsStatusImageView.setImageResource(R.mipmap.add_sale);
         }
-        if(onItemClickListener != null){
+        if (onItemClickListener != null) {
             holder.itemView.setOnClickListener((view) -> onItemClickListener.onItemClick(position));
             holder.toggleSaleView.setOnClickListener((view) -> onItemClickListener.toggleSale(position));
             holder.goodsSaleView.setOnClickListener((view) -> onItemClickListener.shareGood(position));
@@ -78,16 +91,25 @@ public class GoodsAdapter extends RecyclerView.Adapter<GoodsAdapter.ViewHolder> 
         return goodsList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.goods_thumb)ImageView goodsThumbImageView;
-        @BindView(R.id.goods_sale_status_image)ImageView goodsStatusImageView;
-        @BindView(R.id.goods_name)TextView goodsNameTextView;
-        @BindView(R.id.goods_price)TextView goodsPriceTextView;
-        @BindView(R.id.goods_profit)TextView goodsProfitTextView;
-        @BindView(R.id.goods_number)TextView goodsNumberTextView;
-        @BindView(R.id.goods_sale_status)TextView goodsSaleStatusTextView;
-        @BindView(R.id.toggle_sale_container)View toggleSaleView;
-        @BindView(R.id.share_good_container)View goodsSaleView;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.goods_thumb)
+        ImageView goodsThumbImageView;
+        @BindView(R.id.goods_sale_status_image)
+        ImageView goodsStatusImageView;
+        @BindView(R.id.goods_name)
+        TextView goodsNameTextView;
+        @BindView(R.id.goods_price)
+        TextView goodsPriceTextView;
+        @BindView(R.id.goods_profit)
+        TextView goodsProfitTextView;
+        @BindView(R.id.goods_number)
+        TextView goodsNumberTextView;
+        @BindView(R.id.goods_sale_status)
+        TextView goodsSaleStatusTextView;
+        @BindView(R.id.toggle_sale_container)
+        View toggleSaleView;
+        @BindView(R.id.share_good_container)
+        View goodsSaleView;
 
         public ViewHolder(View itemView) {
             super(itemView);

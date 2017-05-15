@@ -8,19 +8,16 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 import android.view.WindowManager;
 
-import com.orhanobut.logger.Logger;
+import com.tencent.smtt.sdk.QbSdk;
+import com.tencent.smtt.sdk.TbsListener;
+import com.xiaomabao.weidian.defines.Const;
 import com.xiaomabao.weidian.models.History;
 import com.xiaomabao.weidian.models.LoginBaseInfo;
-import com.xiaomabao.weidian.models.ShareInfo;
 import com.xiaomabao.weidian.models.ShopBase;
-import com.xiaomabao.weidian.services.CommonService;
-import com.xiaomabao.weidian.ui.FlowTagLayout;
 import com.xiaomabao.weidian.util.LogUtils;
 import com.xiaomabao.weidian.util.SharedPreferencesUtil;
 import com.xiaomabao.weidian.util.TypefaceUtil;
 import com.xiaomabao.weidian.util.XmbDB;
-import com.xiaomabao.weidian.views.fragment.ShoppingCartFragment;
-
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,11 +25,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Date;
 
-import io.realm.HistoryRealmProxy;
 import io.realm.Realm;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
@@ -200,6 +194,39 @@ public class AppContext extends Application {
             e.printStackTrace();
         }
         appContext = this;
+        //初始化tbs x5 webview
+        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
+
+            @Override
+            public void onViewInitFinished(boolean arg0) {
+                // TODO Auto-generated method stub
+                Log.e("app", " onViewInitFinished is " + arg0);
+            }
+
+            @Override
+            public void onCoreInitFinished() {
+                // TODO Auto-generated method stub
+
+            }
+        };
+        QbSdk.setTbsListener(new TbsListener() {
+            @Override
+            public void onDownloadFinish(int i) {
+                Log.d("app", "onDownloadFinish");
+            }
+
+            @Override
+            public void onInstallFinish(int i) {
+                Log.d("app", "onInstallFinish");
+            }
+
+            @Override
+            public void onDownloadProgress(int i) {
+                Log.d("app", "onDownloadProgress:" + i);
+            }
+        });
+
+        QbSdk.initX5Environment(getApplicationContext(), cb);
     }
 
 
@@ -384,6 +411,10 @@ public class AppContext extends Application {
         return (SharedPreferencesUtil.get(context, "is_guide", "") + "").equals("true");
     }
 
+    public static void setCartUrl(Context context) {
+        SharedPreferencesUtil.put(context, "cart_url", Const.CART_URL + "cart");
+    }
+
     public static void setShopBaseInfo(Context mView, ShopBase.ShopBaseInfo.ShopShareInfo shop_share_info) {
         AppContext.setShopName(mView, shop_share_info.shop_name);
         AppContext.setShopAvater(mView, shop_share_info.shop_avatar);
@@ -409,7 +440,7 @@ public class AppContext extends Application {
     public static void clearLoginInfo(Context context) {
         SharedPreferencesUtil.put(context, "token", "");
         SharedPreferencesUtil.put(context, "shop_name", "");
-        SharedPreferencesUtil.put(context, "cart_url", "http://192.168.11.153:81/cart");
+        SharedPreferencesUtil.put(context, "cart_url", Const.CART_URL + "cart");
     }
 
     public static void setCurrentUpdateVersion(Context context) {

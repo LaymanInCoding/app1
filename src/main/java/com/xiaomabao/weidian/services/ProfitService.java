@@ -44,6 +44,9 @@ public class ProfitService {
         @POST("/profit/bind_card")
         Observable<BindCard> bind_card(@FieldMap Map<String, String> params);
 
+        @FormUrlEncoded
+        @POST("/profit/bind_card_update")
+        Observable<BindCard> bind_card_update(@FieldMap Map<String, String> params);
 
         @FormUrlEncoded
         @POST("/profit/apply_withdraw")
